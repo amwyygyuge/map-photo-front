@@ -1,0 +1,1 @@
+export { MapPhoto } from './MapPhoto';

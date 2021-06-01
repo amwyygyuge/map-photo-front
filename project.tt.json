@@ -2,7 +2,8 @@
   "miniprogramRoot": "./",
   "projectname": "map-photo",
   "description": "map-photo-front",
-  "appid": "touristappid",
+  "appid": "wx498274d4baa0e9e9",
+  "projectName": "MapPhoto",
   "setting": {
     "urlCheck": true,
     "es6": false,

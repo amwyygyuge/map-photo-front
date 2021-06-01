@@ -39,5 +39,7 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+  "cloudbaseRoot": "cloudBase/",
   "condition": {}
 }

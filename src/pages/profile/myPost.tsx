@@ -1,3 +1,3 @@
-import { Profile } from './index/profile';
+import { MyPost } from './myPost/myPost';
 
-export default Profile;
+export default MyPost;

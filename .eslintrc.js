@@ -22,6 +22,7 @@ module.exports = {
     es6: true,
   },
   rules: {
+    "@typescript-eslint/naming-convention": "off",
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-useless-constructor": "off",

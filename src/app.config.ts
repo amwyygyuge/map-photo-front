@@ -1,5 +1,10 @@
 export default {
-  pages: ['pages/around/index', 'pages/around/sendPost', 'pages/profile/index'],
+  pages: [
+    'pages/around/index',
+    'pages/create/sendPost',
+    'pages/profile/index',
+    'pages/profile/myPost',
+  ],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
@@ -15,26 +20,40 @@ export default {
     list: [
       {
         pagePath: 'pages/around/index',
+        iconPath: './image/around.png',
+        selectedIconPath: './image/around.png',
         text: '周边',
       },
+      // {
+      //   pagePath: 'pages/around/index',
+      //   selectedIconPath: './image/find.png',
+      //   iconPath: './image/find.png',
+      //   text: '发现',
+      // },
       {
-        pagePath: 'pages/around/index',
-        text: '热点',
+        pagePath: 'pages/create/sendPost',
+        iconPath: './image/create.png',
+        selectedIconPath: './image/create.png',
+        text: '发布',
       },
-      {
-        pagePath: 'pages/around/index',
-        text: '关注',
-      },
+      // {
+      //   pagePath: 'pages/around/index',
+      //   selectedIconPath: './image/focus.png',
+      //   iconPath: './image/focus.png',
+      //   text: '关注',
+      // },
       {
         pagePath: 'pages/profile/index',
+        selectedIconPath: './image/my.png',
+        iconPath: './image/my.png',
         text: '我的',
       },
     ],
   },
-  plugins: {
-    chooseLocation: {
-      version: '1.0.5',
-      provider: 'wx76a9a06e5b4e693e',
-    },
-  },
+  // plugins: {
+  //   chooseLocation: {
+  //     version: '1.0.5',
+  //     provider: 'wx76a9a06e5b4e693e',
+  //   },
+  // },
 };

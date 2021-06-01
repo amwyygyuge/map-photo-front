@@ -1,34 +1,58 @@
-import { View, CoverView, Button, CoverImage } from '@tarojs/components';
+import { View, CoverView, Button, CoverImage, Map } from '@tarojs/components';
 import { observer } from 'mobx-react';
 import { useVM } from '@/utils/index';
 import { AroundViewModel } from './around.ViewModel';
 import { FunctionComponent } from 'react';
-import { MapPhoto } from '../components/MapPhoto';
+import listIcon from '../../../image/list.png';
+import reloadIcon from '../../../image/reload.png';
+import myLocationIcon from '../../../image/myLocation.png';
+
 import './around.scss';
 
 const Around: FunctionComponent = observer(() => {
-  const { handleGoToList, handleReload, location, markers } = useVM<
-    AroundViewModel,
-    {}
-  >(AroundViewModel, {});
+  const {
+    handleGoToList,
+    handleReload,
+    location,
+    markers,
+    handleMoveToMyLocation,
+  } = useVM<AroundViewModel, {}>(AroundViewModel, {});
   return (
     <View className="map-container">
-      <MapPhoto {...location} markers={[markers]}>
+      <Map
+        id="mainMap"
+        className="MapPhoto"
+        showScale
+        {...location}
+        markers={markers}
+      >
         <CoverView className="map-tool">
-          <Button type="primary" onClick={handleGoToList}>
-            列表
-          </Button>
-          <Button type="primary" onClick={handleReload}>
-            刷新
-          </Button>
+          <CoverImage
+            className="icon"
+            src={listIcon}
+            onClick={handleGoToList}
+          />
+          <CoverImage
+            className="icon"
+            src={reloadIcon}
+            onClick={handleReload}
+          />
         </CoverView>
+        <CoverImage
+          className="location-icon"
+          src={myLocationIcon}
+          onClick={handleMoveToMyLocation}
+        />
         <CoverView slot="callout">
           <CoverView markerId="1" className="maker">
-            <CoverImage src="/image/a.png" className="image" />
-            <CoverView className="content">dwadada</CoverView>
+            <CoverImage
+              src="cloud://testing-5g65b9i2e503e641.7465-testing-5g65b9i2e503e641-1303943117/pm/11/file/0.jpg"
+              className="image"
+            />
+            {/* <CoverView className="content">dwadada</CoverView> */}
           </CoverView>
         </CoverView>
-      </MapPhoto>
+      </Map>
     </View>
   );
 });

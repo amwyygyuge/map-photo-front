@@ -19,6 +19,8 @@ export class ProfiledViewModel {
   }
 
   handleGridClick = () => {
-    Taro.navigateTo({ url: 'PostList' });
+    Taro.navigateTo({
+      url: `PostList?userId=${this.profileController.userId}`,
+    });
   };
 }

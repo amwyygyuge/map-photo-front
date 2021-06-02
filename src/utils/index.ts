@@ -1,2 +1,2 @@
-export { useVM } from './useVM';
+export * from './useVM';
 export * from './helper';

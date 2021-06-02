@@ -3,6 +3,7 @@ import { injectable } from 'inversify';
 import { container } from './Container';
 import { getModule, PROFILE_MODULE, ProfileModule } from '@/SDK/index';
 import Taro from '@tarojs/taro';
+import { getStore, STORE_KEYS } from '@/utils/index';
 
 const TAG = Symbol.for('ProfileController');
 
@@ -12,6 +13,10 @@ class ProfileController {
 
   @observable
   profile: Taro.UserInfo;
+
+  get userId() {
+    return getStore<number>(STORE_KEYS.USER_ID);
+  }
 
   @observable
   location: {

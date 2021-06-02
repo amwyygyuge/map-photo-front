@@ -5,6 +5,8 @@ import { requestController } from '@/utils/RequestController';
 export const PROFILE_MODULE = 'PROFILE_MODULE';
 
 export class ProfileModule {
+  appInstance = Taro.getCurrentInstance();
+
   constructor() {
     this.init();
   }
@@ -23,9 +25,9 @@ export class ProfileModule {
     return res.data;
   }
 
-  async getUserPost() {
+  async getUserPost(userId: number) {
     const res = await requestController.getUserPost({
-      user_id: getStore<number>(STORE_KEYS.USER_ID)!,
+      user_id: parseInt(userId, 10),
       id: -1,
       limit: 100,
     });

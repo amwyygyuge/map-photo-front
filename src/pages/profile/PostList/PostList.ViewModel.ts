@@ -1,5 +1,12 @@
 import { computed, observable } from 'mobx';
-import { getModule, PROFILE_MODULE, ProfileModule } from '@/SDK/index';
+import {
+  getModule,
+  APP_MODULE,
+  AppModule,
+  PROFILE_MODULE,
+  ProfileModule,
+} from '@/SDK/index';
+import { ViewModel } from '@/utils/index';
 
 type Post = {
   access: number;
@@ -17,16 +24,23 @@ const post = {
   description: '测试',
 };
 const posts = new Array(10).fill(post);
-export class PostListViewModel {
-  _profileModule = getModule<ProfileModule>(PROFILE_MODULE);
 
-  constructor() {
+export type PostListViewModelProps = {
+  userId: number;
+};
+export class PostListViewModel extends ViewModel<PostListViewModelProps> {
+  private _appModule = getModule<AppModule>(APP_MODULE);
+
+  private _profileModule = getModule<ProfileModule>(PROFILE_MODULE);
+
+  constructor(props: PostListViewModelProps) {
+    super(props);
     this.init();
   }
 
   init = async () => {
-    const res = await this._profileModule.getUserPost();
-    this.posts = res;
+    const params = this._appModule.getRouterParams();
+    this.posts = await this._profileModule.getUserPost(params.userId);
   };
 
   @observable.shallow

@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { observable, runInAction } from 'mobx';
 
+export class ViewModel<T> {
+  @observable
+  props: T;
+
+  constructor(props: T) {
+    this.props = props;
+  }
+}
+
 function useAsObservableSource<T>(current: T): T {
   const [res] = useState(() => observable(current, {}, { deep: false }));
   runInAction(() => {

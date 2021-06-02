@@ -21,8 +21,8 @@ interface Result<T> {
 }
 
 enum BACKEND_ROUTER {
-  LOGIN = 'ug/user/wechat_login',
-  UPDATE_USER_INFO = '/ag/photo/group/update',
+  LOGIN = '/ug/user/wechat_login',
+  UPDATE_USER_INFO = '/ag/user/update_wechat_info',
   GET_USER_INFO = '/ag/user/get_by_id',
   PRE_CREATE = '/ag/photo/group/create',
   CREATE_POST = '/ag/photo/group/update',

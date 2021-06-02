@@ -1,16 +1,15 @@
 import Taro from '@tarojs/taro';
 import { computed, observable, action } from 'mobx';
 import { File } from 'taro-ui/types/image-picker';
-import { getModule, IMAGE_MODULE, ImageController } from '@/SDK/index';
+import { getModule, IMAGE_MODULE, ImageModule } from '@/SDK/index';
+import { getProfileController } from '@/controller/ProfileController';
 
 const logger = Taro.getRealtimeLogManager();
 
-export class SendPostViewModel {
-  constructor() {
-    this._getLocation();
-  }
+export class CreateViewModel {
+  _imageModule = getModule<ImageModule>(IMAGE_MODULE);
 
-  _imageModule = getModule<ImageController>(IMAGE_MODULE);
+  private _profileController = getProfileController();
 
   @observable
   files: File[] = [];
@@ -32,18 +31,21 @@ export class SendPostViewModel {
     return this.access ? '所有人可见' : '自己可见';
   }
 
+  @computed
+  get location() {
+    if (this.selectedLocation) {
+      return this.selectedLocation;
+    }
+    return this._profileController.location;
+  }
+
   @observable
-  location: {
+  selectedLocation: {
     latitude: number;
     longitude: number;
     address?: string;
     name?: string;
-  } = {
-      latitude: 0,
-      longitude: 0,
-      address: '',
-      name: '',
-    };
+  };
 
   @observable
   description: string;
@@ -68,7 +70,7 @@ export class SendPostViewModel {
         latitude: this.location.latitude,
         longitude: this.location.longitude,
       });
-      this.location = result;
+      this.selectedLocation = result;
     } catch (error) {
       logger.info(error);
     }
@@ -76,11 +78,6 @@ export class SendPostViewModel {
 
   handleImageTap = (index: number) => {
     this._imageModule.previewImage(this.imagePants, this.imagePants[index]);
-  };
-
-  @action
-  private _getLocation = async () => {
-    this.location = await Taro.getLocation({ isHighAccuracy: true });
   };
 
   handleSubmit = async () => {

@@ -1,9 +1,9 @@
 export default {
   pages: [
-    'pages/around/index',
-    'pages/create/sendPost',
-    'pages/profile/index',
-    'pages/profile/myPost',
+    'pages/around/Around',
+    'pages/create/Create',
+    'pages/profile/Profile',
+    'pages/profile/PostList',
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -19,7 +19,7 @@ export default {
   tabBar: {
     list: [
       {
-        pagePath: 'pages/around/index',
+        pagePath: 'pages/around/Around',
         iconPath: './image/around.png',
         selectedIconPath: './image/around.png',
         text: '周边',
@@ -31,7 +31,7 @@ export default {
       //   text: '发现',
       // },
       {
-        pagePath: 'pages/create/sendPost',
+        pagePath: 'pages/create/Create',
         iconPath: './image/create.png',
         selectedIconPath: './image/create.png',
         text: '发布',
@@ -43,7 +43,7 @@ export default {
       //   text: '关注',
       // },
       {
-        pagePath: 'pages/profile/index',
+        pagePath: 'pages/profile/Profile',
         selectedIconPath: './image/my.png',
         iconPath: './image/my.png',
         text: '我的',

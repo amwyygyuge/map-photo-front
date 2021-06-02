@@ -1,13 +1,13 @@
 import { View, CoverView, Button, CoverImage, Map } from '@tarojs/components';
 import { observer } from 'mobx-react';
 import { useVM } from '@/utils/index';
-import { AroundViewModel } from './around.ViewModel';
+import { AroundViewModel } from './Around.ViewModel';
 import { FunctionComponent } from 'react';
 import listIcon from '../../../image/list.png';
 import reloadIcon from '../../../image/reload.png';
 import myLocationIcon from '../../../image/myLocation.png';
 
-import './around.scss';
+import './Around.scss';
 
 const Around: FunctionComponent = observer(() => {
   const {

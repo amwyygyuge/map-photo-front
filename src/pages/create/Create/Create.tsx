@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import { useVM } from '@/utils/index';
-import { SendPostViewModel } from './sendPost.ViewModel';
+import { CreateViewModel } from './Create.ViewModel';
 import { FunctionComponent } from 'react';
 import {
   AtForm,
@@ -11,13 +11,13 @@ import {
   AtIcon,
 } from 'taro-ui';
 import { Text, View } from '@tarojs/components';
-import './sendPost.scss';
+import './Create.scss';
 
 const MAX_IMAGES_COUNT = 9;
 const SOURCE_TYPE = ['camera', 'album'];
 const SIZE_TYPE = ['original', 'compressed'];
 
-const SendPost: FunctionComponent = observer(() => {
+const Create: FunctionComponent = observer(() => {
   const {
     handleAccessChange,
     handleImageUpload,
@@ -29,7 +29,7 @@ const SendPost: FunctionComponent = observer(() => {
     handleSubmit,
     address,
     accessLabel,
-  } = useVM<SendPostViewModel, {}>(SendPostViewModel, {});
+  } = useVM<CreateViewModel, {}>(CreateViewModel, {});
   return (
     <AtForm className="container" onSubmit={handleSubmit}>
       <AtTextarea
@@ -79,4 +79,4 @@ const SendPost: FunctionComponent = observer(() => {
   );
 });
 
-export { SendPost };
+export { Create };

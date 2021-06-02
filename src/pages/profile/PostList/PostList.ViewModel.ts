@@ -1,5 +1,5 @@
 import { computed, observable } from 'mobx';
-import { getModule, PROFILE_MODULE, ProfileController } from '@/SDK/index';
+import { getModule, PROFILE_MODULE, ProfileModule } from '@/SDK/index';
 
 type Post = {
   access: number;
@@ -17,8 +17,8 @@ const post = {
   description: '测试',
 };
 const posts = new Array(10).fill(post);
-export class MyPostViewModel {
-  _profileModule = getModule<ProfileController>(PROFILE_MODULE);
+export class PostListViewModel {
+  _profileModule = getModule<ProfileModule>(PROFILE_MODULE);
 
   constructor() {
     this.init();

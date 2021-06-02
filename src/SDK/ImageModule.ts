@@ -12,7 +12,7 @@ const MAX_CHECK_SIZE = 1000 * 5210 - 1;
 
 const rex = /[^\.]\w*$/;
 
-export class ImageController {
+export class ImageModule {
   async createPost(data: {
     access: number;
     description: string;

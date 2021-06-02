@@ -1,13 +1,13 @@
 import { View, ScrollView, Text, Image } from '@tarojs/components';
 import { observer } from 'mobx-react';
 import { useVM } from '@/utils/index';
-import { MyPostViewModel } from './myPost.ViewModel';
+import { PostListViewModel } from './PostList.ViewModel';
 import { FunctionComponent } from 'react';
 import { AtCard } from 'taro-ui';
-import './myPost.scss';
+import './PostList.scss';
 
-const MyPost: FunctionComponent = observer(() => {
-  const { posts } = useVM<MyPostViewModel, {}>(MyPostViewModel, {});
+const PostList: FunctionComponent = observer(() => {
+  const { posts } = useVM<PostListViewModel, {}>(PostListViewModel, {});
   return (
     <ScrollView
       className="list"
@@ -72,4 +72,4 @@ const MyPost: FunctionComponent = observer(() => {
   );
 });
 
-export { MyPost };
+export { PostList };

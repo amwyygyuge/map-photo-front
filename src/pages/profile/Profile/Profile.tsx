@@ -1,19 +1,24 @@
 import { View } from '@tarojs/components';
 import { observer } from 'mobx-react';
 import { useVM } from '@/utils/index';
-import { ProfiledViewModel } from './profile.ViewModel';
+import { ProfiledViewModel } from './Profile.ViewModel';
 import { FunctionComponent } from 'react';
 import { AtGrid, AtAvatar } from 'taro-ui';
-import './profile.scss';
+import './Profile.scss';
 
 const Profile: FunctionComponent = observer(() => {
-  const { handleGridClick } = useVM<ProfiledViewModel, {}>(
+  const { handleGridClick, profile } = useVM<ProfiledViewModel, {}>(
     ProfiledViewModel,
     {},
   );
+  console.log(profile);
+
+  const { avatarUrl, nickName } = profile;
+
   return (
     <View className="index">
-      <AtAvatar circle className="avatar" />
+      <AtAvatar circle className="avatar" image={avatarUrl} />
+      {nickName}
       <AtGrid
         onClick={handleGridClick}
         hasBorder={false}

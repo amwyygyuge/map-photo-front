@@ -4,7 +4,7 @@ import { requestController } from '@/utils/RequestController';
 
 export const PROFILE_MODULE = 'PROFILE_MODULE';
 
-export class ProfileController {
+export class ProfileModule {
   constructor() {
     this.init();
   }
@@ -20,7 +20,7 @@ export class ProfileController {
     const res = await requestController.getUserInfo({
       id: getStore<number>(STORE_KEYS.USER_ID)!,
     });
-    console.log(res);
+    return res.data;
   }
 
   async getUserPost() {

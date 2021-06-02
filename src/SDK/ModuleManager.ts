@@ -1,6 +1,6 @@
-import { PROFILE_MODULE, ProfileController } from './ProfileController';
-import { IMAGE_MODULE, ImageController } from './ImageController';
-import { RECOMMEND_MODULE, RecommendController } from './RecommendController';
+import { PROFILE_MODULE, ProfileModule } from './ProfileModule';
+import { IMAGE_MODULE, ImageModule } from './ImageModule';
+import { RECOMMEND_MODULE, RecommendModule } from './RecommendModule';
 
 class ModuleManager {
   private _modules: Map<string, Object> = new Map();
@@ -19,9 +19,9 @@ class ModuleManager {
 const moduleManager = new ModuleManager();
 
 const initModule = () => {
-  moduleManager.registerModule(PROFILE_MODULE, ProfileController);
-  moduleManager.registerModule(IMAGE_MODULE, ImageController);
-  moduleManager.registerModule(RECOMMEND_MODULE, RecommendController);
+  moduleManager.registerModule(PROFILE_MODULE, ProfileModule);
+  moduleManager.registerModule(IMAGE_MODULE, ImageModule);
+  moduleManager.registerModule(RECOMMEND_MODULE, RecommendModule);
 };
 
 const getModule = <T>(key: string): T => moduleManager.getModule<T>(key);

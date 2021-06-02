@@ -1,16 +1,23 @@
-import { action, computed, observable } from 'mobx';
+import { action, computed, observable, when } from 'mobx';
 import Taro from '@tarojs/taro';
 import dotIcon from '../../../image/dot.png';
-import { getModule, RECOMMEND_MODULE, RecommendController } from '@/SDK/index';
+import { getModule, RECOMMEND_MODULE, RecommendModule } from '@/SDK/index';
+import { getProfileController } from '@/controller/ProfileController';
 
 export class AroundViewModel {
   private _mapContext = Taro.createMapContext('mainMap');
 
-  private _recommendController =
-    getModule<RecommendController>(RECOMMEND_MODULE);
+  private _recommendController = getModule<RecommendModule>(RECOMMEND_MODULE);
+
+  private _profileController = getProfileController();
+
+  @computed
+  get location() {
+    return this._profileController.location;
+  }
 
   constructor() {
-    this.init();
+    when(() => !!this.location.longitude, this.init);
   }
 
   init = async () => {
@@ -19,18 +26,13 @@ export class AroundViewModel {
   };
 
   handleReload = () => {
-    console.log(111);
     Taro.navigateTo({ url: 'sendPost' });
   };
 
-  handleGoToList = () => {
-    console.log(222);
-  };
+  handleGoToList = () => { };
 
   @action
-  getLocation = async () => {
-    const location = await Taro.getLocation({});
-    this.location = location;
+  getLocation = () => {
     const { latitude, longitude } = this.location;
     const myLocationMark = {
       id: 0,
@@ -46,12 +48,6 @@ export class AroundViewModel {
 
   handleMoveToMyLocation = () => {
     this._mapContext.moveToLocation(this.location);
-  };
-
-  @observable
-  location = {
-    latitude: 0,
-    longitude: 0,
   };
 
   @observable.shallow

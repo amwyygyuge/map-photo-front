@@ -27,7 +27,7 @@ export class ProfileModule {
 
   async getUserPost(userId: number) {
     const res = await requestController.getUserPost({
-      user_id: parseInt(userId, 10),
+      user_id: parseInt(`${userId}`, 10),
       id: -1,
       limit: 100,
     });
@@ -35,15 +35,20 @@ export class ProfileModule {
   }
 
   async getPostByIds(ids: (number | string)[]) {
-    const _ids = ids.map((id) => parseInt(id, 10));
+    const _ids = ids.map((id) => parseInt(`${id}`, 10));
     return (await requestController.getPostsByIds({ ids: _ids })).data;
   }
 
   async updateUserInfo() {
     const { userInfo } = await Taro.getUserInfo();
-    return requestController.updateUserInfo({
-      ...userInfo,
-      id: getStore<number>(STORE_KEYS.USER_ID)!,
-    });
+    return requestController.updateUserInfo(userInfo);
+  }
+
+  followUser(userId: number) {
+    return requestController.followUser({ publisher: userId });
+  }
+
+  unFollowUser(userId: number) {
+    return requestController.unFollowUser({ publisher: userId });
   }
 }

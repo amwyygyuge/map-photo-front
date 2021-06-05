@@ -47,7 +47,7 @@ export type createPostReturn = {
 export type getUserInfoParams = {
   id: number;
 };
-export type getUserPostParams = {
+export type getUserListParams = {
   user_id: number;
   id: number;
   limit: number;
@@ -63,18 +63,14 @@ export type getRecommendByLocationParams = {
   scroll_id: number;
 };
 
-export type getRecommendByLocationReturn = {
-  photo_group_id: number;
-};
-
 export type getRecommendGlobalParams = {
   scroll_id: number;
 };
 
-export type getRecommendGlobalReturn = {
-  photo_group_id: number;
-};
-
 export type getPostsByIdsParams = {
   ids: number[];
+};
+
+export type FollowParams = {
+  publisher: number;
 };

@@ -4,7 +4,7 @@ import { useVM } from '@/utils/index';
 import { PostDetailViewModel, PostDetailProps } from './PostDetail.ViewModel';
 import { FunctionComponent, useMemo } from 'react';
 import './PostDetail.scss';
-import { AtAvatar, AtIcon, AtDivider } from 'taro-ui';
+import { AtAvatar, AtIcon, AtDivider, AtMessage } from 'taro-ui';
 import { KudosButton } from '../KudosButton';
 import { CommentButton } from '../CommentButton';
 import { ReportButton } from '../ReportButton';
@@ -15,7 +15,7 @@ const PostDetailComponent: FunctionComponent<PostDetailProps> = observer(
     useVM(PostDetailViewModel, props);
     const { post } = props;
     const {
-      user: { nickName, avatarUrl },
+      user: { nickName, avatarUrl, id },
       created_at,
       comment_count,
       praise_count,
@@ -25,10 +25,11 @@ const PostDetailComponent: FunctionComponent<PostDetailProps> = observer(
     const photoArray = useMemo(() => photos.split(','), [photos]);
     return (
       <View className="at-article detail">
+        <AtMessage />
         <View className="at-article__h1">
           <AtAvatar image={avatarUrl} circle size="small" />
           <Text className="user-name">{nickName}</Text>
-          <FollowButton />
+          <FollowButton userId={id} isFollowed />
         </View>
         <View className="at-article__info sub-title">
           <Text className="time">{created_at}</Text>

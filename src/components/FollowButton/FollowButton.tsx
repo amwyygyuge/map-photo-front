@@ -9,12 +9,23 @@ import './FollowButton.scss';
 import { AtButton, AtIcon } from 'taro-ui';
 
 const FollowButton: FunctionComponent<FollowButtonProps> = observer((props) => {
-  useVM(FollowButtonViewModel, props);
+  const { handleClick, isFollowed, isMe, text } = useVM(
+    FollowButtonViewModel,
+    props,
+  );
 
+  if (isMe) {
+    return null;
+  }
   return (
-    <AtButton type="primary" size="small" className="follow-button">
-      <AtIcon value="add" size={18} />
-      关注
+    <AtButton
+      onClick={handleClick}
+      type="primary"
+      size="small"
+      className="follow-button"
+    >
+      {!isFollowed && <AtIcon value="add" size={18} />}
+      {text}
     </AtButton>
   );
 });

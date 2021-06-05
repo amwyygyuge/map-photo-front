@@ -7,10 +7,11 @@ import {
   createPostParams,
   createPostReturn,
   getRecommendByLocationParams,
-  getUserPostParams,
+  getUserListParams,
   getRecommendGlobalParams,
   getUserInfoParams,
   getPostsByIdsParams,
+  FollowParams,
 } from './types';
 import { User, Post, PostWithUser } from './RequestType';
 
@@ -96,7 +97,7 @@ class RequestController {
     });
   }
 
-  getUserPost(data: getUserPostParams) {
+  getUserPost(data: getUserListParams) {
     return this.request<Post[]>({
       url: BACKEND_ROUTER.GET_USER_POST,
       data,
@@ -127,6 +128,34 @@ class RequestController {
   getRecommendGlobal(data: getRecommendGlobalParams) {
     return this.request<Post[]>({
       url: BACKEND_ROUTER.GET_RECOMMEND_GLOBAL,
+      data,
+    });
+  }
+
+  followUser(data: FollowParams) {
+    return this.request<Post[]>({
+      url: BACKEND_ROUTER.FOLLOW,
+      data,
+    });
+  }
+
+  unFollowUser(data: FollowParams) {
+    return this.request<Post[]>({
+      url: BACKEND_ROUTER.UN_FOLLOW,
+      data,
+    });
+  }
+
+  getFollows(data: getUserListParams) {
+    return this.request<Post[]>({
+      url: BACKEND_ROUTER.GET_FOLLOWS,
+      data,
+    });
+  }
+
+  getFans(data: getUserListParams) {
+    return this.request<Post[]>({
+      url: BACKEND_ROUTER.GET_FOLLOWS,
       data,
     });
   }

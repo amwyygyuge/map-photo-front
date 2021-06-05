@@ -4,6 +4,7 @@ export default {
     'pages/create/Create',
     'pages/profile/Profile',
     'pages/profile/PostList',
+    'pages/profile/PostDetail',
   ],
   window: {
     backgroundTextStyle: 'light',

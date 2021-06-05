@@ -10,7 +10,9 @@ import {
   getUserPostParams,
   getRecommendGlobalParams,
   getUserInfoParams,
+  getPostsByIdsParams,
 } from './types';
+import { User, Post, PostWithUser } from './RequestType';
 
 const logger = Taro.getRealtimeLogManager();
 
@@ -29,6 +31,11 @@ enum BACKEND_ROUTER {
   GET_USER_POST = '/ag/photo/group/get_by_user',
   GET_RECOMMEND_BY_LOCATION = '/ag/photo/recommend/geo',
   GET_RECOMMEND_GLOBAL = '/ag/photo/recommend/global',
+  FOLLOW = '/ag/user/attention',
+  UN_FOLLOW = '/ag/user/un_attention',
+  GET_FOLLOWS = '/ag/user/get_publishers',
+  GET_FANS = '/ag/user/get_fans',
+  GET_POST_BY_IDS = '/ag/photo/group/get_by_ids',
 }
 
 enum STATUS_CODE {
@@ -90,28 +97,35 @@ class RequestController {
   }
 
   getUserPost(data: getUserPostParams) {
-    return this.request<createPostReturn>({
+    return this.request<Post[]>({
       url: BACKEND_ROUTER.GET_USER_POST,
       data,
     });
   }
 
+  getPostsByIds(data: getPostsByIdsParams) {
+    return this.request<PostWithUser[]>({
+      url: BACKEND_ROUTER.GET_POST_BY_IDS,
+      data,
+    });
+  }
+
   getUserInfo(data: getUserInfoParams) {
-    return this.request<createPostReturn>({
+    return this.request<User>({
       url: BACKEND_ROUTER.GET_USER_INFO,
       data,
     });
   }
 
   getRecommendByLocation(data: getRecommendByLocationParams) {
-    return this.request<createPostReturn>({
+    return this.request<Post[]>({
       url: BACKEND_ROUTER.GET_RECOMMEND_BY_LOCATION,
       data,
     });
   }
 
   getRecommendGlobal(data: getRecommendGlobalParams) {
-    return this.request<createPostReturn>({
+    return this.request<Post[]>({
       url: BACKEND_ROUTER.GET_RECOMMEND_GLOBAL,
       data,
     });

@@ -7,23 +7,7 @@ import {
   ProfileModule,
 } from '@/SDK/index';
 import { ViewModel } from '@/utils/index';
-
-type Post = {
-  access: number;
-  description: string;
-  latitude: number;
-  longitude: number;
-  location: string;
-  photos: string;
-  coverPhoto: string;
-};
-
-const post = {
-  coverPhoto:
-    'cloud://testing-5g65b9i2e503e641.7465-testing-5g65b9i2e503e641-1303943117/pm/11/file/0.jpg',
-  description: '测试',
-};
-const posts = new Array(10).fill(post);
+import { Post } from '@/utils/RequestType';
 
 export type PostListViewModelProps = {
   userId: number;
@@ -44,5 +28,5 @@ export class PostListViewModel extends ViewModel<PostListViewModelProps> {
   };
 
   @observable.shallow
-  posts: Post[] = posts;
+  posts: Post[] = [];
 }

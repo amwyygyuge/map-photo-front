@@ -7,17 +7,14 @@ import { AtGrid, AtAvatar } from 'taro-ui';
 import './Profile.scss';
 
 const Profile: FunctionComponent = observer(() => {
-  const { handleGridClick, profile } = useVM<ProfiledViewModel, {}>(
-    ProfiledViewModel,
-    {},
-  );
+  const { handleGridClick, profile } = useVM(ProfiledViewModel, {});
 
   const { avatarUrl, nickName } = profile;
 
   return (
     <View className="index">
       <AtAvatar circle className="avatar" image={avatarUrl} />
-      {nickName}
+      <View className="at-article__h2">{nickName}</View>
       <AtGrid
         onClick={handleGridClick}
         hasBorder={false}

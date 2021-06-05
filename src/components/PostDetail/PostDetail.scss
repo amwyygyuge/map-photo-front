@@ -1,0 +1,40 @@
+.detail {
+  .at-article__h1 {
+    display: flex;
+    align-items: center;
+    .user-name {
+      margin-left: 30rpx;
+      flex: 1;
+      text-align: left;
+    }
+  }
+  .sub-title {
+    display: flex;
+    align-content: center;
+    justify-content: flex-end;
+    .infos {
+      justify-items: flex-end;
+      .at-icon {
+        margin-left: 20rpx;
+      }
+    }
+  }
+  .images {
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    .at-article__img {
+      width: 30%;
+      height: 200rpx;
+    }
+  }
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    margin: 16rpx 30rpx;
+    .at-icon {
+      margin: 0 12px;
+    }
+  }
+}

@@ -29,7 +29,7 @@ const Create: FunctionComponent = observer(() => {
     handleSubmit,
     address,
     accessLabel,
-  } = useVM<CreateViewModel, {}>(CreateViewModel, {});
+  } = useVM(CreateViewModel, {});
   return (
     <AtForm className="container" onSubmit={handleSubmit}>
       <AtTextarea

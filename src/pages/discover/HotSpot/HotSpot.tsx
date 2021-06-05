@@ -6,7 +6,7 @@ import { FunctionComponent } from 'react';
 import './HotSpot.scss';
 
 const HotSpot: FunctionComponent = observer(() => {
-  useVM<HotSpotViewModel, {}>(HotSpotViewModel, {});
+  useVM(HotSpotViewModel, {});
 
   return <View className="index" />;
 });

@@ -18,8 +18,8 @@ function useAsObservableSource<T>(current: T): T {
   return res;
 }
 
-export function useVM<T, P>(ViewModel: new (props: P) => T, props): T {
+export function useVM<T, P = {}>(M: new (props: P) => T, props): T {
   const observableProps = useAsObservableSource(props);
-  const [vm] = useState(() => new ViewModel(observableProps));
+  const [vm] = useState(() => new M(observableProps));
   return vm;
 }

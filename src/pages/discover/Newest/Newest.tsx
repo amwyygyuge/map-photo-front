@@ -6,7 +6,7 @@ import { FunctionComponent } from 'react';
 import './Newest.scss';
 
 const Newest: FunctionComponent = observer(() => {
-  useVM<NewestViewModel, {}>(NewestViewModel, {});
+  useVM(NewestViewModel, {});
 
   return <View className="index" />;
 });

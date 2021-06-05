@@ -16,7 +16,7 @@ const Around: FunctionComponent = observer(() => {
     location,
     markers,
     handleMoveToMyLocation,
-  } = useVM<AroundViewModel, {}>(AroundViewModel, {});
+  } = useVM(AroundViewModel, {});
   return (
     <View className="map-container">
       <Map

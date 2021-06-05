@@ -1,0 +1,1 @@
+export { PostDetailComponent } from './PostDetail';

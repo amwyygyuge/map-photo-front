@@ -6,7 +6,7 @@ import { FunctionComponent } from 'react';
 import './AroundPostList.scss';
 
 const AroundPostList: FunctionComponent = observer(() => {
-  useVM<AroundPostListViewModel, {}>(AroundPostListViewModel, {});
+  useVM(AroundPostListViewModel, {});
 
   return <View className="index" />;
 });

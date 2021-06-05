@@ -6,7 +6,7 @@ import { FunctionComponent } from 'react';
 import './Follow.scss';
 
 const Follow: FunctionComponent = observer(() => {
-  useVM<FollowViewModel, {}>(FollowViewModel, {});
+  useVM(FollowViewModel, {});
 
   return <View className="index" />;
 });

@@ -1,1 +1,0 @@
-export { RouterTabBar } from './RouterTabBar';

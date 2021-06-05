@@ -34,6 +34,11 @@ export class ProfileModule {
     return res.data;
   }
 
+  async getPostByIds(ids: (number | string)[]) {
+    const _ids = ids.map((id) => parseInt(id, 10));
+    return (await requestController.getPostsByIds({ ids: _ids })).data;
+  }
+
   async updateUserInfo() {
     const { userInfo } = await Taro.getUserInfo();
     return requestController.updateUserInfo({

@@ -6,7 +6,7 @@ import { FunctionComponent } from 'react';
 import './Kudos.scss';
 
 const Kudos: FunctionComponent = observer(() => {
-  useVM<KudosViewModel, {}>(KudosViewModel, {});
+  useVM(KudosViewModel, {});
 
   return <View className="index" />;
 });

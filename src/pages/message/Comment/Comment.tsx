@@ -6,7 +6,7 @@ import { FunctionComponent } from 'react';
 import './Comment.scss';
 
 const Comment: FunctionComponent = observer(() => {
-  useVM<CommentViewModel, {}>(CommentViewModel, {});
+  useVM(CommentViewModel, {});
 
   return <View className="index" />;
 });

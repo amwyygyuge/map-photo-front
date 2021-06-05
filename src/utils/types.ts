@@ -74,3 +74,7 @@ export type getRecommendGlobalParams = {
 export type getRecommendGlobalReturn = {
   photo_group_id: number;
 };
+
+export type getPostsByIdsParams = {
+  ids: number[];
+};

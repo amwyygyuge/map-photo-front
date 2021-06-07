@@ -33,8 +33,11 @@ export class FollowButtonViewModel extends ViewModel<FollowButtonProps> {
 
   @action
   handleClick = async () => {
+    const doAction = this.isFollowed
+      ? this._profileModule.unFollowUser
+      : this._profileModule.followUser;
     this.isFollowed = !this.isFollowed;
-    const res = await this._profileModule.followUser(this.props.userId);
+    const res = await doAction(this.props.userId);
     if (res.data! == this.isFollowed) {
       Taro.atMessage({
         type: 'error',

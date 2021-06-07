@@ -53,6 +53,11 @@ export type getUserListParams = {
   limit: number;
 };
 
+export type ListParam = {
+  id: number;
+  limit: number;
+};
+
 export type getUserPostReturn = {
   photo_group_id: number;
 };

@@ -1,26 +1,22 @@
 import { computed } from 'mobx';
-import { getModule, PROFILE_MODULE, ProfileModule } from '@/SDK/index';
 import Taro from '@tarojs/taro';
-import { getProfileController } from '@/controller/ProfileController';
+import { ViewModelWithModule } from '@/utils/index';
 
-export class ProfiledViewModel {
-  _profileModule = getModule<ProfileModule>(PROFILE_MODULE);
-
-  profileController = getProfileController();
-
+export class ProfiledViewModel extends ViewModelWithModule {
   @computed
   get profile() {
-    return this.profileController.profile || {};
+    return this._profileController.profile || {};
   }
 
   constructor() {
+    super({});
     this._profileModule.getUserInfo();
-    this._profileModule.getUserPost();
   }
 
-  handleGridClick = () => {
+  handleGridClick = (item) => {
+    const url = `${item.url}&userId=${this._profileController.userId}`;
     Taro.navigateTo({
-      url: `PostList?userId=${this.profileController.userId}`,
+      url,
     });
   };
 }

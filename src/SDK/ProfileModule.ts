@@ -34,6 +34,24 @@ export class ProfileModule {
     return res.data;
   }
 
+  async getFollows(userId: number) {
+    const res = await requestController.getFollows({
+      follower: parseInt(`${userId}`, 10),
+      id: -1,
+      limit: 100,
+    });
+    return res.data;
+  }
+
+  async getFans(userId: number) {
+    const res = await requestController.getFans({
+      publisher: parseInt(`${userId}`, 10),
+      id: -1,
+      limit: 100,
+    });
+    return res.data;
+  }
+
   async getPostByIds(ids: (number | string)[]) {
     const _ids = ids.map((id) => parseInt(`${id}`, 10));
     return (await requestController.getPostsByIds({ ids: _ids })).data;

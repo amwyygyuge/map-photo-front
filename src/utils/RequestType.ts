@@ -3,6 +3,7 @@ export type User = {
   city: string;
   comment_count: number;
   country: string;
+  does_self_followed: boolean;
   fans_count: number;
   follow_count: number;
   gender: number;
@@ -36,6 +37,19 @@ export type Post = {
   status: number;
   updated_at: string;
   user_id: number;
+};
+
+export type Attention = {
+  created_at: string;
+  follower: number;
+  id: number;
+  publisher: number;
+};
+
+export type Follow = {
+  attention: Attention;
+  does_self_followed: boolean;
+  user: User;
 };
 
 export type PostWithUser = Post & { user: User };

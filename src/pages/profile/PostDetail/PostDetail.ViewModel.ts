@@ -1,29 +1,13 @@
 import { action, observable } from 'mobx';
-import {
-  getModule,
-  IMAGE_MODULE,
-  ImageModule,
-  APP_MODULE,
-  ProfileModule,
-  PROFILE_MODULE,
-  AppModule,
-} from '@/SDK/index';
 import { PostWithUser } from '@/utils/RequestType';
-import { getProfileController } from '@/controller/ProfileController';
+import { ViewModelWithModule } from '@/utils/index';
 
-export class PostDetailViewModel {
-  private _imageModule = getModule<ImageModule>(IMAGE_MODULE);
-
-  private _profileModule = getModule<ProfileModule>(PROFILE_MODULE);
-
-  private _appModule = getModule<AppModule>(APP_MODULE);
-
-  profileController = getProfileController();
-
+export class PostDetailViewModel extends ViewModelWithModule {
   @observable
   post: PostWithUser;
 
   constructor() {
+    super({});
     this.getDetail();
   }
 

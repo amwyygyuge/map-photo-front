@@ -2,14 +2,12 @@ import { action, computed, observable, when } from 'mobx';
 import Taro from '@tarojs/taro';
 import dotIcon from '../../../image/dot.png';
 import { getModule, RECOMMEND_MODULE, RecommendModule } from '@/SDK/index';
-import { getProfileController } from '@/controller/ProfileController';
+import { ViewModelWithModule } from '@/utils/index';
 
-export class AroundViewModel {
+export class AroundViewModel extends ViewModelWithModule {
   private _mapContext = Taro.createMapContext('mainMap');
 
   private _recommendController = getModule<RecommendModule>(RECOMMEND_MODULE);
-
-  private _profileController = getProfileController();
 
   @computed
   get location() {
@@ -17,6 +15,7 @@ export class AroundViewModel {
   }
 
   constructor() {
+    super({});
     when(() => !!this.location.longitude, this.init);
   }
 

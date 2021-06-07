@@ -7,13 +7,13 @@ import {
   createPostParams,
   createPostReturn,
   getRecommendByLocationParams,
-  getUserListParams,
   getRecommendGlobalParams,
   getUserInfoParams,
   getPostsByIdsParams,
   FollowParams,
+  ListParam,
 } from './types';
-import { User, Post, PostWithUser } from './RequestType';
+import { User, Post, PostWithUser, Follow } from './RequestType';
 
 const logger = Taro.getRealtimeLogManager();
 
@@ -97,7 +97,7 @@ class RequestController {
     });
   }
 
-  getUserPost(data: getUserListParams) {
+  getUserPost(data: ListParam & { user_id: number }) {
     return this.request<Post[]>({
       url: BACKEND_ROUTER.GET_USER_POST,
       data,
@@ -146,16 +146,16 @@ class RequestController {
     });
   }
 
-  getFollows(data: getUserListParams) {
-    return this.request<Post[]>({
+  getFollows(data: ListParam & { follower: number }) {
+    return this.request<Follow[]>({
       url: BACKEND_ROUTER.GET_FOLLOWS,
       data,
     });
   }
 
-  getFans(data: getUserListParams) {
+  getFans(data: ListParam & { publisher: number }) {
     return this.request<Post[]>({
-      url: BACKEND_ROUTER.GET_FOLLOWS,
+      url: BACKEND_ROUTER.GET_FANS,
       data,
     });
   }

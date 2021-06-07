@@ -1,16 +1,12 @@
 import Taro from '@tarojs/taro';
 import { computed, observable, action } from 'mobx';
 import { File } from 'taro-ui/types/image-picker';
-import { getModule, IMAGE_MODULE, ImageModule } from '@/SDK/index';
-import { getProfileController } from '@/controller/ProfileController';
+
+import { ViewModelWithModule } from '@/utils/index';
 
 const logger = Taro.getRealtimeLogManager();
 
-export class CreateViewModel {
-  _imageModule = getModule<ImageModule>(IMAGE_MODULE);
-
-  private _profileController = getProfileController();
-
+export class CreateViewModel extends ViewModelWithModule {
   @observable
   files: File[] = [];
 

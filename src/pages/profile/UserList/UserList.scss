@@ -1,0 +1,47 @@
+.list {
+  height: 100vh;
+  background: #f8f8f8;
+  .post-card {
+    margin: 12rpx auto;
+    background: #fff;
+    border-radius: 8px 8px 0 0;
+    width: 100%;
+    padding: 16rpx;
+    box-sizing: border-box;
+    padding: 20rpx;
+    .user-info {
+      display: flex;
+      align-items: center;
+      navigator {
+        display: inline-block;
+      }
+      view.avatar {
+        width: 70rpx;
+        height: 70rpx;
+        font-size: 20rpx;
+        line-height: 70rpx;
+        display: block;
+        margin-right: 20rpx;
+      }
+      .infos {
+        display: flex;
+        flex-direction: column;
+        .info {
+          color: #ccc;
+          font-size: 28rpx;
+          line-height: 42rpx;
+        }
+      }
+    }
+    .actions {
+      flex: 1;
+      padding-right: 10rpx;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      .at-button {
+        margin: 0;
+      }
+    }
+  }
+}

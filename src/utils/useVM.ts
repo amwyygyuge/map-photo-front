@@ -1,12 +1,36 @@
 import { useState } from 'react';
 import { observable, runInAction } from 'mobx';
+import {
+  getModule,
+  APP_MODULE,
+  AppModule,
+  PROFILE_MODULE,
+  ProfileModule,
+  IMAGE_MODULE,
+  ImageModule,
+} from '@/SDK/index';
+import { getProfileController } from '@/controller/ProfileController';
 
-export class ViewModel<T> {
+export class ViewModel<T = {}> {
   @observable
   props: T;
 
   constructor(props: T) {
     this.props = props;
+  }
+}
+
+export class ViewModelWithModule<T = {}> extends ViewModel<T> {
+  protected _appModule = getModule<AppModule>(APP_MODULE);
+
+  protected _profileModule = getModule<ProfileModule>(PROFILE_MODULE);
+
+  protected _imageModule = getModule<ImageModule>(IMAGE_MODULE);
+
+  protected _profileController = getProfileController();
+
+  constructor(props: T) {
+    super(props);
   }
 }
 

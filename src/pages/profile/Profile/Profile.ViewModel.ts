@@ -1,21 +1,43 @@
-import { computed } from 'mobx';
-import Taro from '@tarojs/taro';
+import { action, computed, observable } from 'mobx';
 import { ViewModelWithModule } from '@/utils/index';
 
 export class ProfiledViewModel extends ViewModelWithModule {
-  @computed
-  get profile() {
-    return this._profileController.profile || {};
-  }
+  @observable
+  profileData: Base.User;
 
   constructor() {
     super({});
-    this._profileModule.getUserInfo();
+    this.init();
   }
 
+  @observable
+  private _userIdInParams: string;
+
+  @computed
+  private get _userId() {
+    if (this._userIdInParams) {
+      return this._userIdInParams;
+    }
+    return this._profileController.userId;
+  }
+
+  @action
+  init = async () => {
+    const params = this._appModule.getRouterParams();
+    this._userIdInParams = params.userId;
+    if (params.userId) {
+      this.profileData = await this._profileModule.getUserInfo(params.userId);
+      this._taro.setNavigationBarTitle({
+        title: `${this.profileData.nickName}的主页`,
+      });
+      return;
+    }
+    this.profileData = this._profileController.profile;
+  };
+
   handleGridClick = (item) => {
-    const url = `${item.url}&userId=${this._profileController.userId}`;
-    Taro.navigateTo({
+    const url = `${item.url}&userId=${this._userId}`;
+    this._taro.navigateTo({
       url,
     });
   };

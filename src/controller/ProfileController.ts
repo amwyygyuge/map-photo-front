@@ -12,7 +12,7 @@ class ProfileController {
   _profileModule = getModule<ProfileModule>(PROFILE_MODULE);
 
   @observable
-  profile: Taro.UserInfo;
+  profile: Base.User;
 
   get userId() {
     return getStore<number>(STORE_KEYS.USER_ID);
@@ -48,7 +48,9 @@ class ProfileController {
 
   @action
   private _updateUserProfile = async () => {
-    this.profile = await this._profileModule.getUserInfo();
+    this.profile = await this._profileModule.getUserInfo(
+      getStore<number>(STORE_KEYS.USER_ID)!,
+    );
   };
 }
 

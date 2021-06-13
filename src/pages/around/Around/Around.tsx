@@ -5,6 +5,7 @@ import { AroundViewModel } from './Around.ViewModel';
 import { FunctionComponent } from 'react';
 import listIcon from '../../../image/list.png';
 import reloadIcon from '../../../image/reload.png';
+import searchIcon from '../../../image/search.png';
 import myLocationIcon from '../../../image/myLocation.png';
 
 import './Around.scss';
@@ -15,34 +16,37 @@ const Around: FunctionComponent = observer(() => {
     handleReload,
     location,
     markers,
+    handleMapTab,
     handleMoveToMyLocation,
+    handleRegionChange,
+    searchLocation,
   } = useVM(AroundViewModel, {});
   return (
     <View className="map-container">
+      <CoverView className="map-tool">
+        <CoverImage
+          className="icon"
+          src={searchIcon}
+          onClick={searchLocation}
+        />
+        <CoverImage className="icon" src={listIcon} onClick={handleGoToList} />
+        <CoverImage className="icon" src={reloadIcon} onClick={handleReload} />
+      </CoverView>
+      <CoverImage
+        className="location-icon"
+        src={myLocationIcon}
+        onClick={handleMoveToMyLocation}
+      />
       <Map
         id="mainMap"
         className="MapPhoto"
         showScale
+        enableRotate={false}
+        onTap={handleMapTab}
+        onRegionChange={handleRegionChange}
         {...location}
         markers={markers}
       >
-        <CoverView className="map-tool">
-          <CoverImage
-            className="icon"
-            src={listIcon}
-            onClick={handleGoToList}
-          />
-          <CoverImage
-            className="icon"
-            src={reloadIcon}
-            onClick={handleReload}
-          />
-        </CoverView>
-        <CoverImage
-          className="location-icon"
-          src={myLocationIcon}
-          onClick={handleMoveToMyLocation}
-        />
         <CoverView slot="callout">
           <CoverView markerId="1" className="maker">
             <CoverImage

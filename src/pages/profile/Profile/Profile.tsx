@@ -7,9 +7,9 @@ import { AtGrid, AtAvatar } from 'taro-ui';
 import './Profile.scss';
 
 const Profile: FunctionComponent = observer(() => {
-  const { handleGridClick, profile } = useVM(ProfiledViewModel, {});
-
-  const { avatarUrl, nickName } = profile;
+  const { handleGridClick, profileData } = useVM(ProfiledViewModel, {});
+  if (!profileData) return null;
+  const { avatarUrl, nickName } = profileData;
 
   return (
     <View className="index">

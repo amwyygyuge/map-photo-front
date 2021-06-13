@@ -3,6 +3,7 @@ export default {
     'pages/around/Around',
     'pages/create/Create',
     'pages/profile/Profile',
+    'pages/profile/OtherProfile',
     'pages/profile/PostList',
     'pages/profile/PostDetail',
     'pages/profile/UserList',

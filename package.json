@@ -42,6 +42,8 @@
     "@tarojs/taro": "3.2.8",
     "exifreader": "^3.15.0",
     "inversify": "^5.1.1",
+    "lodash.debounce": "^4.0.8",
+    "lodash.throttle": "^4.1.1",
     "mobx": "5.15.7",
     "mobx-react": "6.3.1",
     "react": "^17.0.0",

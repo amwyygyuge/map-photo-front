@@ -1,7 +1,6 @@
 import { action, computed, observable } from 'mobx';
 import { ViewModelWithModule } from '@/utils/index';
 import { Follow } from '@/utils/RequestType';
-import Taro from '@tarojs/taro';
 
 export type UserListViewModelViewModelProps = {
   userId: number;
@@ -27,13 +26,17 @@ export class UserListViewModel extends ViewModelWithModule<UserListViewModelView
   init = async () => {
     const { userId, userType } = this._appModule.getRouterParams();
     const { title, functionName } = userConfig[userType];
-    Taro.setNavigationBarTitle({ title });
+    this._taro.setNavigationBarTitle({ title });
     this.data = await this._profileModule[functionName](userId);
   };
 
   @action
   handleScrollToLower = () => {
     this.data = this.data.concat(...this.data);
+  };
+
+  handleAvatarClick = (userId: number) => {
+    this._taro.navigateTo({ url: `OtherProfile?userId=${userId}` });
   };
 
   @observable.shallow

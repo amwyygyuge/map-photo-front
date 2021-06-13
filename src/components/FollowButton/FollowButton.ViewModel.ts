@@ -1,14 +1,13 @@
 import { computed, action, observable } from 'mobx';
 import { getModule, PROFILE_MODULE, ProfileModule } from '@/SDK/index';
 import { getProfileController } from '@/controller/ProfileController';
-import { ViewModel } from '@/utils/index';
-import Taro from '@tarojs/taro';
+import { ViewModelWithModule } from '@/utils/index';
 
 export type FollowButtonProps = {
   userId: number;
   isFollowed: boolean;
 };
-export class FollowButtonViewModel extends ViewModel<FollowButtonProps> {
+export class FollowButtonViewModel extends ViewModelWithModule<FollowButtonProps> {
   _profileModule = getModule<ProfileModule>(PROFILE_MODULE);
 
   profileController = getProfileController();
@@ -39,12 +38,12 @@ export class FollowButtonViewModel extends ViewModel<FollowButtonProps> {
     this.isFollowed = !this.isFollowed;
     const res = await doAction(this.props.userId);
     if (res.data! == this.isFollowed) {
-      Taro.atMessage({
+      this._taro.atMessage({
         type: 'error',
         message: '关注失败',
       });
     } else {
-      Taro.atMessage({
+      this._taro.atMessage({
         type: 'success',
         message: '关注成功',
       });

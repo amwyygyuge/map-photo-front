@@ -4,11 +4,17 @@ import { requestController } from '@/utils/RequestController';
 
 export const PROFILE_MODULE = 'PROFILE_MODULE';
 
+type UserId = number | string;
+
 export class ProfileModule {
   appInstance = Taro.getCurrentInstance();
 
   constructor() {
     this.init();
+  }
+
+  isMe(userId: UserId) {
+    return getStore<string>(STORE_KEYS.USER_ID) === `${userId}`;
   }
 
   async init() {
@@ -18,23 +24,23 @@ export class ProfileModule {
     }
   }
 
-  async getUserInfo() {
+  async getUserInfo(userId: UserId) {
     const res = await requestController.getUserInfo({
-      id: getStore<number>(STORE_KEYS.USER_ID)!,
+      id: parseInt(`${userId}`, 10),
     });
     return res.data;
   }
 
-  async getUserPost(userId: number) {
+  async getUserPost(userId: UserId, id: number, limit: number) {
     const res = await requestController.getUserPost({
       user_id: parseInt(`${userId}`, 10),
-      id: -1,
-      limit: 100,
+      id,
+      limit,
     });
     return res.data;
   }
 
-  async getFollows(userId: number) {
+  async getFollows(userId: UserId) {
     const res = await requestController.getFollows({
       follower: parseInt(`${userId}`, 10),
       id: -1,
@@ -43,7 +49,7 @@ export class ProfileModule {
     return res.data;
   }
 
-  async getFans(userId: number) {
+  async getFans(userId: UserId) {
     const res = await requestController.getFans({
       publisher: parseInt(`${userId}`, 10),
       id: -1,
@@ -52,7 +58,7 @@ export class ProfileModule {
     return res.data;
   }
 
-  async getPostByIds(ids: (number | string)[]) {
+  async getPostByIds(ids: UserId[]) {
     const _ids = ids.map((id) => parseInt(`${id}`, 10));
     return (await requestController.getPostsByIds({ ids: _ids })).data;
   }
@@ -62,11 +68,11 @@ export class ProfileModule {
     return requestController.updateUserInfo(userInfo);
   }
 
-  followUser(userId: number) {
+  followUser(userId: UserId) {
     return requestController.followUser({ publisher: userId });
   }
 
-  unFollowUser(userId: number) {
+  unFollowUser(userId: UserId) {
     return requestController.unFollowUser({ publisher: userId });
   }
 }

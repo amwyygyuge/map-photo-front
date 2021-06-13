@@ -1,27 +1,8 @@
 import Taro from '@tarojs/taro';
 import { getStore, STORE_KEYS, setStore } from './helper';
 import { DOMAIN } from '@/config/domain.config';
-import {
-  updateUserInfoReturn,
-  preCreateReturn,
-  createPostParams,
-  createPostReturn,
-  getRecommendByLocationParams,
-  getRecommendGlobalParams,
-  getUserInfoParams,
-  getPostsByIdsParams,
-  FollowParams,
-  ListParam,
-} from './types';
-import { User, Post, PostWithUser, Follow } from './RequestType';
 
 const logger = Taro.getRealtimeLogManager();
-
-interface Result<T> {
-  code: number;
-  message: string;
-  data: T;
-}
 
 enum BACKEND_ROUTER {
   LOGIN = '/ug/user/wechat_login',
@@ -62,7 +43,7 @@ class RequestController {
     });
     const doRequest = () => {
       Object.assign(options.header, { Authorization: this.jwtToken });
-      return Taro.request<Result<T>>(options);
+      return Taro.request<Base.Result<T>>(options);
     };
     try {
       let result = await doRequest();
@@ -78,83 +59,83 @@ class RequestController {
   }
 
   updateUserInfo(data: Taro.UserInfo) {
-    return this.request<updateUserInfoReturn>({
+    return this.request<API.updateUserInfoReturn>({
       url: BACKEND_ROUTER.UPDATE_USER_INFO,
       data,
     });
   }
 
   preCreate() {
-    return this.request<preCreateReturn>({
+    return this.request<API.preCreateReturn>({
       url: BACKEND_ROUTER.PRE_CREATE,
     });
   }
 
-  createPost(data: createPostParams) {
-    return this.request<createPostReturn>({
+  createPost(data: API.createPostParams) {
+    return this.request<API.createPostReturn>({
       url: BACKEND_ROUTER.CREATE_POST,
       data,
     });
   }
 
-  getUserPost(data: ListParam & { user_id: number }) {
-    return this.request<Post[]>({
+  getUserPost(data: API.ListParam & { user_id: number }) {
+    return this.request<Base.Post[]>({
       url: BACKEND_ROUTER.GET_USER_POST,
       data,
     });
   }
 
-  getPostsByIds(data: getPostsByIdsParams) {
-    return this.request<PostWithUser[]>({
+  getPostsByIds(data: API.getPostsByIdsParams) {
+    return this.request<Base.PostWithUser[]>({
       url: BACKEND_ROUTER.GET_POST_BY_IDS,
       data,
     });
   }
 
-  getUserInfo(data: getUserInfoParams) {
-    return this.request<User>({
+  getUserInfo(data: API.getUserInfoParams) {
+    return this.request<Base.User>({
       url: BACKEND_ROUTER.GET_USER_INFO,
       data,
     });
   }
 
-  getRecommendByLocation(data: getRecommendByLocationParams) {
-    return this.request<Post[]>({
+  getRecommendByLocation(data: API.getRecommendByLocationParams) {
+    return this.request<Base.Post[]>({
       url: BACKEND_ROUTER.GET_RECOMMEND_BY_LOCATION,
       data,
     });
   }
 
-  getRecommendGlobal(data: getRecommendGlobalParams) {
-    return this.request<Post[]>({
+  getRecommendGlobal(data: API.getRecommendGlobalParams) {
+    return this.request<Base.Post[]>({
       url: BACKEND_ROUTER.GET_RECOMMEND_GLOBAL,
       data,
     });
   }
 
-  followUser(data: FollowParams) {
-    return this.request<Post[]>({
+  followUser(data: API.FollowParams) {
+    return this.request<Base.Post[]>({
       url: BACKEND_ROUTER.FOLLOW,
       data,
     });
   }
 
-  unFollowUser(data: FollowParams) {
-    return this.request<Post[]>({
+  unFollowUser(data: API.FollowParams) {
+    return this.request<Base.Post[]>({
       url: BACKEND_ROUTER.UN_FOLLOW,
       data,
     });
   }
 
-  getFollows(data: ListParam & { follower: number }) {
-    return this.request<Follow[]>({
+  getFollows(data: API.ListParam & { follower: number }) {
+    return this.request<Base.Follow[]>({
       url: BACKEND_ROUTER.GET_FOLLOWS,
       data,
     });
   }
 
-  getFans(data: ListParam & { publisher: number }) {
-    return this.request<Post[]>({
+  getFans(data: API.ListParam & { publisher: number }) {
+    return this.request<Base.Post[]>({
       url: BACKEND_ROUTER.GET_FANS,
       data,
     });

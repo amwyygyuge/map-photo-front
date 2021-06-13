@@ -10,6 +10,8 @@
     position: absolute;
     top: 5px;
     right: 5px;
+    z-index: 9999999;
+
     .icon {
       margin: 10px;
       width: 60px;
@@ -24,6 +26,7 @@
     width: 80px;
     height: 80px;
     margin: 10px;
+    z-index: 9999999;
   }
 
   .maker {

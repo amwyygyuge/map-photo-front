@@ -1,10 +1,7 @@
-import Taro from '@tarojs/taro';
 import { computed, observable, action } from 'mobx';
 import { File } from 'taro-ui/types/image-picker';
 
 import { ViewModelWithModule } from '@/utils/index';
-
-const logger = Taro.getRealtimeLogManager();
 
 export class CreateViewModel extends ViewModelWithModule {
   @observable
@@ -62,13 +59,13 @@ export class CreateViewModel extends ViewModelWithModule {
   @action
   handleChoseLocation = async () => {
     try {
-      const result = await Taro.chooseLocation({
+      const result = await this._taro.chooseLocation({
         latitude: this.location.latitude,
         longitude: this.location.longitude,
       });
       this.selectedLocation = result;
     } catch (error) {
-      logger.info(error);
+      this._logger.info(error);
     }
   };
 
@@ -77,20 +74,20 @@ export class CreateViewModel extends ViewModelWithModule {
   };
 
   handleSubmit = async () => {
-    Taro.showLoading({ title: '发布中，请稍后...', mask: true });
+    this._taro.showLoading({ title: '发布中，请稍后...', mask: true });
 
     if (!(await this._imageModule.checkImages(this.imagePants))) {
-      Taro.showToast({ title: '图片审核不通过，请检查上传的图片。' });
-      Taro.hideLoading();
+      this._taro.showToast({ title: '图片审核不通过，请检查上传的图片。' });
+      this._taro.hideLoading();
       return;
     }
     if (!(await this._imageModule.checkMsg(this.description))) {
-      Taro.showToast({ title: '文本内容审核不通过，请检查文本内容。' });
-      Taro.hideLoading();
+      this._taro.showToast({ title: '文本内容审核不通过，请检查文本内容。' });
+      this._taro.hideLoading();
       return;
     }
     const { name, address, longitude, latitude } = this.location;
-    logger.info(
+    this._logger.info(
       'file before compress',
       this.files.map((file) => file.file?.size),
     );
@@ -102,8 +99,8 @@ export class CreateViewModel extends ViewModelWithModule {
       location: `${name}(${address})`,
       photos: this.imagePants,
     });
-    Taro.hideLoading();
-    Taro.showToast({ title: '发布成功' });
+    this._taro.hideLoading();
+    this._taro.showToast({ title: '发布成功' });
   };
 
   @action
@@ -112,7 +109,7 @@ export class CreateViewModel extends ViewModelWithModule {
       ({ file }) => !this._imageModule.isImageSizeExceed(file!.size),
     );
     if (filteredFiles.length !== files.length) {
-      Taro.showToast({ title: '部分图片超出2M，请压缩有重新上传。' });
+      this._taro.showToast({ title: '部分图片超出2M，请压缩有重新上传。' });
     }
     this.files = filteredFiles;
   };

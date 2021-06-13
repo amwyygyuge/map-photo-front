@@ -8,8 +8,11 @@ import {
   ProfileModule,
   IMAGE_MODULE,
   ImageModule,
+  RecommendModule,
+  RECOMMEND_MODULE,
 } from '@/SDK/index';
 import { getProfileController } from '@/controller/ProfileController';
+import Taro from '@tarojs/taro';
 
 export class ViewModel<T = {}> {
   @observable
@@ -27,7 +30,13 @@ export class ViewModelWithModule<T = {}> extends ViewModel<T> {
 
   protected _imageModule = getModule<ImageModule>(IMAGE_MODULE);
 
+  protected _recommendController = getModule<RecommendModule>(RECOMMEND_MODULE);
+
   protected _profileController = getProfileController();
+
+  protected _taro = Taro;
+
+  protected _logger = this._taro.getRealtimeLogManager();
 
   constructor(props: T) {
     super(props);

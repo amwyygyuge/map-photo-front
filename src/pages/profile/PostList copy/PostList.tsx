@@ -11,12 +11,10 @@ import { AtAvatar, AtIcon } from 'taro-ui';
 
 const PostList: FunctionComponent<PostListViewModelProps> = observer(
   (props) => {
-    const { handleScrollToLower, columns, dataStatus } = useVM(
+    const { column2, column1, handleScrollToLower } = useVM(
       PostListViewModel,
       props,
     );
-
-    const [column1, column2] = columns;
     return (
       <ScrollView
         className="list"

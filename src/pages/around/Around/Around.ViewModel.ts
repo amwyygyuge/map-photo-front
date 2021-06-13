@@ -1,56 +1,54 @@
 import { action, computed, observable, when } from 'mobx';
-import Taro from '@tarojs/taro';
 import dotIcon from '../../../image/dot.png';
-import { getModule, RECOMMEND_MODULE, RecommendModule } from '@/SDK/index';
 import { ViewModelWithModule } from '@/utils/index';
+import myLocationIcon from '../../../image/myLocation.png';
+import debounce from 'lodash.debounce';
 
 export class AroundViewModel extends ViewModelWithModule {
-  private _mapContext = Taro.createMapContext('mainMap');
+  private _mapContext = this._taro.createMapContext('mainMap');
 
-  private _recommendController = getModule<RecommendModule>(RECOMMEND_MODULE);
+  @observable
+  _userTapLocation: Base.Location;
 
   @computed
-  get location() {
-    return this._profileController.location;
+  get markers() {
+    return [
+      ...this.recommendMarker,
+      this.myLocationMarker,
+      this.userSelectLocationMarker,
+    ];
   }
 
-  constructor() {
-    super({});
-    when(() => !!this.location.longitude, this.init);
-  }
-
-  init = async () => {
-    await this.getLocation();
-    this._recommendController.getUserPost({ ...this.location, scroll_id: -1 });
-  };
-
-  handleReload = () => {
-    Taro.navigateTo({ url: 'sendPost' });
-  };
-
-  handleGoToList = () => { };
-
-  @action
-  getLocation = () => {
+  @computed
+  get myLocationMarker() {
     const { latitude, longitude } = this.location;
-    const myLocationMark = {
+    return {
       id: 0,
       latitude,
       longitude,
       title: '我的位置',
       iconPath: dotIcon,
-      with: 20,
-      height: 20,
+      with: '60rpx',
+      height: '60rpx',
     };
-    this.markers = [...this.markers, myLocationMark];
-  };
+  }
 
-  handleMoveToMyLocation = () => {
-    this._mapContext.moveToLocation(this.location);
-  };
+  @computed
+  get userSelectLocationMarker() {
+    const { latitude, longitude } = this.location;
+    return {
+      id: -1,
+      latitude,
+      longitude,
+      title: '所选位置',
+      iconPath: myLocationIcon,
+      height: '60rpx',
+      with: '60rpx',
+    };
+  }
 
-  @observable.shallow
-  markers = [
+  @observable
+  recommendMarker: any[] = [
     {
       id: 1,
       latitude: 24.47951,
@@ -72,4 +70,69 @@ export class AroundViewModel extends ViewModelWithModule {
       },
     },
   ];
+
+  @computed
+  get location() {
+    return this._profileController.location;
+  }
+
+  @action
+  searchLocation = async () => {
+    const { latitude, longitude } = this.userSelectLocationMarker;
+    try {
+      const result = await this._taro.chooseLocation({
+        latitude,
+        longitude,
+      });
+      this.handleMapTab({ detail: result });
+    } catch (error) {
+      this._logger.info(error);
+    }
+  };
+
+  constructor() {
+    super({});
+    when(() => !!this.location.longitude, this.init);
+  }
+
+  init = async () => {
+    // this.addMyLocation();
+    this._recommendController.getRecommendByLocation({
+      ...this.location,
+      scroll_id: 0,
+      limit: 100,
+    });
+  };
+
+  handleReload = () => {
+    this._taro.navigateTo({ url: 'sendPost' });
+  };
+
+  @action
+  handleMapTab = (e) => {
+    this._mapContext.translateMarker({
+      markerId: -1,
+      destination: e.detail,
+      duration: 0.5,
+      autoRotate: false,
+      rotate: 0,
+    });
+    this._mapContext.moveToLocation(e.detail);
+  };
+
+  handleGoToList = () => { };
+
+  handleRegionChange = debounce(
+    (e) => {
+      if (e.type === 'end') {
+        console.log(e);
+      }
+    },
+    1500,
+    { trailing: true, leading: false },
+  );
+
+  handleMoveToMyLocation = () => {
+    this._mapContext.moveToLocation(this.location);
+  };
 }

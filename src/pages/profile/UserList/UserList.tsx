@@ -12,7 +12,10 @@ import { FollowButton } from '@/components/FollowButton';
 
 const UserList: FunctionComponent<UserListViewModelViewModelProps> = observer(
   (props) => {
-    const { data, handleScrollToLower } = useVM(UserListViewModel, props);
+    const { data, handleScrollToLower, handleAvatarClick } = useVM(
+      UserListViewModel,
+      props,
+    );
     return (
       <ScrollView
         className="list"
@@ -30,16 +33,14 @@ const UserList: FunctionComponent<UserListViewModelViewModelProps> = observer(
           } = item;
           return (
             <View className="post-card at-row" key={id}>
-              <View className="user-info">
-                <Navigator url={`PostDetail?postId=${id}`}>
-                  <AtAvatar
-                    circle
-                    size="small"
-                    text="头像"
-                    className="avatar"
-                    image={avatarUrl}
-                  />
-                </Navigator>
+              <View className="user-info" onClick={() => handleAvatarClick(id)}>
+                <AtAvatar
+                  circle
+                  size="small"
+                  text="头像"
+                  className="avatar"
+                  image={avatarUrl}
+                />
                 <View className="infos">
                   <Text className="userName">{nickName}</Text>
                   <Text className="info">
@@ -47,6 +48,7 @@ const UserList: FunctionComponent<UserListViewModelViewModelProps> = observer(
                   </Text>
                 </View>
               </View>
+
               <View className="actions">
                 <FollowButton isFollowed={does_self_followed} userId={id} />
               </View>

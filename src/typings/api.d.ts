@@ -71,7 +71,8 @@ declare namespace API {
   };
 
   type getRecommendGlobalParams = {
-    scroll_id: number;
+    scroll_id: string;
+    limit: number;
   };
 
   type getPostsByIdsParams = {
@@ -80,5 +81,10 @@ declare namespace API {
 
   type FollowParams = {
     publisher: number;
+  };
+
+  type RecommendReturn = {
+    list: number[];
+    scroll_id: string;
   };
 }

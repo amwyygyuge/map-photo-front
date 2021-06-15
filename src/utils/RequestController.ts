@@ -100,14 +100,14 @@ class RequestController {
   }
 
   getRecommendByLocation(data: API.getRecommendByLocationParams) {
-    return this.request<Base.Post[]>({
+    return this.request<API.RecommendReturn>({
       url: BACKEND_ROUTER.GET_RECOMMEND_BY_LOCATION,
       data,
     });
   }
 
   getRecommendGlobal(data: API.getRecommendGlobalParams) {
-    return this.request<Base.Post[]>({
+    return this.request<API.RecommendReturn>({
       url: BACKEND_ROUTER.GET_RECOMMEND_GLOBAL,
       data,
     });

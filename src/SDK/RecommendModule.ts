@@ -2,14 +2,10 @@ import { requestController } from '@/utils/RequestController';
 
 export const RECOMMEND_MODULE = 'RECOMMEND_MODULE';
 
-type Region = {
-  northeast: Base.Location;
-  southwest: Base.Location;
-};
 export class RecommendModule {
   async getRecommendByLocation(
     data: {
-      region: Region;
+      region: Base.Region;
     } & Pick<API.getRecommendByLocationParams, 'limit' | 'scroll_id'>,
   ) {
     const _data = {
@@ -18,13 +14,18 @@ export class RecommendModule {
       ...this._transferLocation(data.region),
     };
     const res = await requestController.getRecommendByLocation(_data);
-    return res;
+    return res.data;
   }
 
-  private _transferLocation(region: Region) {
+  private _transferLocation(region: Base.Region) {
     const { northeast, southwest } = region;
-    const bottom_right = [northeast.latitude, northeast.longitude];
-    const top_left = [southwest.latitude, southwest.longitude];
+    const bottom_right = [northeast.longitude, southwest.latitude];
+    const top_left = [southwest.longitude, northeast.latitude];
     return { bottom_right, top_left };
+  }
+
+  async getRecommendGlobal(data: API.getRecommendGlobalParams) {
+    const res = await requestController.getRecommendGlobal(data);
+    return res.data;
   }
 }

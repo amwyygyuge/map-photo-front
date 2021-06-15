@@ -1,6 +1,5 @@
 import { action, computed, observable } from 'mobx';
 import { ViewModelWithModule } from '@/utils/index';
-import { Follow } from '@/utils/RequestType';
 
 export type UserListViewModelViewModelProps = {
   userId: number;
@@ -40,5 +39,5 @@ export class UserListViewModel extends ViewModelWithModule<UserListViewModelView
   };
 
   @observable.shallow
-  data: Follow[] = [];
+  data: Base.Follow[] = [];
 }

@@ -1,10 +1,9 @@
 import { action, observable } from 'mobx';
-import { PostWithUser } from '@/utils/RequestType';
 import { ViewModelWithModule } from '@/utils/index';
 
 export class PostDetailViewModel extends ViewModelWithModule {
   @observable
-  post: PostWithUser;
+  post: Base.PostWithUser;
 
   constructor() {
     super({});

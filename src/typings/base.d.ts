@@ -63,4 +63,8 @@ declare namespace Base {
   };
 
   type PostWithUser = Post & { user: User };
+  type Region = {
+    northeast: Location;
+    southwest: Location;
+  };
 }

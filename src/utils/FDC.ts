@@ -1,20 +1,25 @@
-import { observable, computed, action } from 'mobx';
+import { observable, computed, action, autorun } from 'mobx';
 
 interface Options<T> {
   index?: number;
   maxCache?: number;
   size: number;
   fetchLimit?: number;
-  requestFunction: (index: number, limit: number) => Promise<T[]>;
+  requestFunction: (p: any) => Promise<T[]>;
   onNoMoreData?: () => void;
 }
 
-abstract class BaseFDC<T> {
+export class BaseFDC<T> {
   @observable
   loading: boolean = false;
 
   @observable.shallow
   private _cacheData: T[] = [];
+
+  protected _step: number;
+
+  @observable
+  noMoreData = false;
 
   @computed
   get data() {
@@ -43,20 +48,28 @@ abstract class BaseFDC<T> {
 
   protected _requestFunction: Options<T>['requestFunction'];
 
+  protected _onNoMoreData?: Options<T>['onNoMoreData'];
+
   constructor(options: Options<T>) {
-    const { index, maxCache, size, requestFunction, fetchLimit } = options;
+    const { index, maxCache, size, requestFunction, fetchLimit, onNoMoreData } =
+      options;
     this._index = index ?? 0;
     this._maxCache = maxCache ?? 100;
     this._size = size ?? 10;
+    this._step = size ?? 10;
     this._fetchLimit = fetchLimit ?? 20;
     this._requestFunction = requestFunction;
-    this._fetchData(this._index);
+    this._onNoMoreData = onNoMoreData;
   }
 
+  init = () => {
+    this._fetchData(this._index);
+  };
+
   @action
-  protected async _fetchData(index: number) {
+  protected async _fetchData(index: number | string) {
     this.loading = true;
-    const data = await this._requestFunction(index - 1, this._fetchLimit);
+    const data = await this._handleRequest(index);
     this.loading = false;
     if (data.length === 0) {
       return false;
@@ -64,17 +77,21 @@ abstract class BaseFDC<T> {
     this._cacheData = this._cacheData.concat(data);
     return true;
   }
-}
 
-// 切片式
-export class FDC<T> extends BaseFDC<T> {
+  protected _handleRequest(index: number | string) {
+    return this._requestFunction({
+      index: ((index ?? this._endIndex) as number) - 1,
+      limit: this._fetchLimit,
+    });
+  }
+
+  // 切片式
   @action
   async nextGroup() {
     if (this._endIndex + this._size <= this.maxIndex) {
       this._index = this._endIndex;
       return;
     }
-
     const hasData = await this._fetchData(this._endIndex);
     if (hasData) {
       this._index = this._endIndex;
@@ -82,23 +99,8 @@ export class FDC<T> extends BaseFDC<T> {
     }
     this._index = 0;
   }
-}
 
-// 增量式
-export class SFDC<T> extends BaseFDC<T> {
-  constructor(options: Options<T>) {
-    super(options);
-    const { onNoMoreData } = options;
-    this._onNoMoreData = onNoMoreData;
-  }
-
-  private _step = this._size;
-
-  @observable
-  noMoreData = false;
-
-  private _onNoMoreData: Options<T>['onNoMoreData'];
-
+  // 增量式
   @action
   async loadMore() {
     if (this.noMoreData) {
@@ -111,9 +113,63 @@ export class SFDC<T> extends BaseFDC<T> {
     }
     const hasData = await this._fetchData(this._endIndex);
     if (hasData) {
-      this._size = this._size + this._size;
+      this._size = this._size + this._step;
       return;
     }
+
+    this.noMoreData = true;
+    this._onNoMoreData?.();
+  }
+}
+
+export class RecommendFDC<T> extends BaseFDC<T> {
+  private _scrollId: string = '-1';
+
+  init = () => {
+    this._fetchData(this._scrollId);
+  };
+
+  @action
+  protected async _handleRequest(index: number | string) {
+    const { list, scroll_id } = await this._requestFunction({
+      scroll_id: index ?? this._scrollId,
+      limit: this._fetchLimit,
+    });
+    this._scrollId = scroll_id;
+    return list;
+  }
+
+  @action
+  async nextGroup() {
+    if (this._endIndex + this._size <= this.maxIndex) {
+      this._index = this._endIndex;
+      return;
+    }
+    const hasData = await this._fetchData(this._scrollId);
+    if (hasData) {
+      this._index = this._endIndex;
+      return;
+    }
+    this._index = 0;
+  }
+
+  // 增量式
+  @action
+  async loadMore() {
+    if (this.noMoreData) {
+      this._onNoMoreData?.();
+      return false;
+    }
+    if (this._endIndex + this._step <= this.maxIndex) {
+      this._size = this._size + this._step;
+      return;
+    }
+    const hasData = await this._fetchData(this._scrollId);
+    if (hasData) {
+      this._size = this._size + this._step;
+      return;
+    }
+
     this.noMoreData = true;
     this._onNoMoreData?.();
   }

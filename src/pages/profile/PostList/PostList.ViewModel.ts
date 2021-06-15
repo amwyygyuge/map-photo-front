@@ -1,7 +1,6 @@
 import { action, computed, observable } from 'mobx';
 import { ViewModelWithModule } from '@/utils/index';
-import { Post } from '@/utils/RequestType';
-import { SFDC } from '@/utils/FDC';
+import { BaseFDC } from '@/utils/FDC';
 
 export type PostListViewModelProps = {
   userId: number;
@@ -13,12 +12,11 @@ export class PostListViewModel extends ViewModelWithModule<PostListViewModelProp
   }
 
   @observable.shallow
-  private _foc: SFDC<Post>;
+  private _foc: BaseFDC<Base.Post>;
 
   @computed
-  private get _data() {
+  get data() {
     console.log(this._foc.data.length);
-
     return this._foc.data;
   }
 
@@ -33,33 +31,24 @@ export class PostListViewModel extends ViewModelWithModule<PostListViewModelProp
     return false;
   }
 
-  @computed
-  get columns() {
-    const column1: Post[] = [];
-    const column2: Post[] = [];
-
-    for (let i = 0; i < this._data.length; i++) {
-      if (i % 2 === 1) {
-        column1.push(this._data[i]);
-      } else {
-        column2.push(this._data[i]);
-      }
-    }
-    return [column1, column2];
-  }
-
-  init = async () => {
+  init = () => {
     const params = this._appModule.getRouterParams();
-    const requestFunction = (index: number, limit: number) =>
-      this._profileModule.getUserPost(params.userId, index, limit);
-    this._foc = new SFDC<Post>({
+    const requestFunction = ({
+      index,
+      limit,
+    }: {
+      index: number;
+      limit: number;
+    }) => this._profileModule.getUserPost(params.userId, index, limit);
+    this._foc = new BaseFDC<Base.Post>({
       requestFunction,
       size: 5,
-      fetchLimit: 5,
+      fetchLimit: 50,
       onNoMoreData() {
         console.log(1111);
       },
     });
+    this._foc.init();
   };
 
   @action

@@ -3,8 +3,20 @@ import dotIcon from '../../../image/dot.png';
 import { ViewModelWithModule } from '@/utils/index';
 import myLocationIcon from '../../../image/myLocation.png';
 import debounce from 'lodash.debounce';
+import { RecommendFDC } from '@/utils/FDC';
 
 export class AroundViewModel extends ViewModelWithModule {
+  @observable.shallow
+  private _recommendFDC: RecommendFDC<number>;
+
+  @computed
+  get ids() {
+    if (this._recommendFDC) {
+      return this._recommendFDC.data;
+    }
+    return [];
+  }
+
   private _mapContext = this._taro.createMapContext('mainMap');
 
   @observable
@@ -92,20 +104,27 @@ export class AroundViewModel extends ViewModelWithModule {
 
   constructor() {
     super({});
-    when(() => !!this.location.longitude, this.init);
+    when(() => !!this.location.longitude, this.updateFOD);
   }
 
-  init = async () => {
-    // this.addMyLocation();
-    this._recommendController.getRecommendByLocation({
-      ...this.location,
-      scroll_id: 0,
-      limit: 100,
+  @action
+  updateFOD = async () => {
+    const region = (await this._mapContext.getRegion()) as Base.Region;
+    const requestFunction = ({ scroll_id, limit }) =>
+      this._recommendController.getRecommendByLocation({
+        region,
+        scroll_id,
+        limit,
+      });
+    this._recommendFDC = new RecommendFDC<number>({
+      requestFunction,
+      size: 10,
     });
+    this._recommendFDC.init();
   };
 
   handleReload = () => {
-    this._taro.navigateTo({ url: 'sendPost' });
+    this._recommendFDC.nextGroup();
   };
 
   @action
@@ -118,9 +137,12 @@ export class AroundViewModel extends ViewModelWithModule {
       rotate: 0,
     });
     this._mapContext.moveToLocation(e.detail);
+    this.updateFOD();
   };
 
-  handleGoToList = () => { };
+  handleGoToList = () => {
+    this._taro.navigateTo({ url: 'AroundPostList' });
+  };
 
   handleRegionChange = debounce(
     (e) => {

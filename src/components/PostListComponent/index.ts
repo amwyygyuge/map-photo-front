@@ -1,0 +1,1 @@
+export { PostListComponent } from './PostListComponent';

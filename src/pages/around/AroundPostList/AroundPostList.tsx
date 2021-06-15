@@ -1,14 +1,19 @@
-import { View } from '@tarojs/components';
 import { observer } from 'mobx-react';
 import { useVM } from '@/utils/index';
 import { AroundPostListViewModel } from './AroundPostList.ViewModel';
 import { FunctionComponent } from 'react';
 import './AroundPostList.scss';
+import { PostListComponent } from '@/components/PostListComponent';
 
 const AroundPostList: FunctionComponent = observer(() => {
-  useVM(AroundPostListViewModel, {});
+  const { handleScrollToLower, dataStatus, data } = useVM(
+    AroundPostListViewModel,
+    {},
+  );
 
-  return <View className="index" />;
+  return (
+    <PostListComponent data={data} onScrollToLower={handleScrollToLower} />
+  );
 });
 
 export { AroundPostList };

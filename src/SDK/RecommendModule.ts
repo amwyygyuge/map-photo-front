@@ -14,7 +14,11 @@ export class RecommendModule {
       ...this._transferLocation(data.region),
     };
     const res = await requestController.getRecommendByLocation(_data);
-    return res.data;
+    const { list, scroll_id } = res.data;
+    return {
+      scroll_id,
+      list: list ? list : [],
+    };
   }
 
   private _transferLocation(region: Base.Region) {

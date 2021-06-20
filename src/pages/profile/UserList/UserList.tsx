@@ -48,7 +48,6 @@ const UserList: FunctionComponent<UserListViewModelViewModelProps> = observer(
                   </Text>
                 </View>
               </View>
-
               <View className="actions">
                 <FollowButton isFollowed={does_self_followed} userId={id} />
               </View>

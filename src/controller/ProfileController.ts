@@ -14,6 +14,8 @@ class ProfileController {
   @observable
   profile: Base.User;
 
+  region: Base.Region;
+
   get userId() {
     return getStore<number>(STORE_KEYS.USER_ID);
   }
@@ -30,7 +32,7 @@ class ProfileController {
     this.init();
   }
 
-  init = async () => {
+  init = () => {
     this._updateUserProfile();
     this._getLocation();
     Taro.onLocationChange(this._updateLocation);

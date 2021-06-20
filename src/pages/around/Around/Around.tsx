@@ -20,6 +20,7 @@ const Around: FunctionComponent = observer(() => {
     handleMoveToMyLocation,
     handleRegionChange,
     searchLocation,
+    recommendMarker,
   } = useVM(AroundViewModel, {});
   return (
     <View className="map-container">
@@ -47,6 +48,16 @@ const Around: FunctionComponent = observer(() => {
         {...location}
         markers={markers}
       >
+        {recommendMarker.map((mark) => {
+          const { id, cover_photo } = mark;
+          return (
+            <CoverView slot="callout" key={id}>
+              <CoverView markerId={id} className="maker">
+                <CoverImage src={cover_photo} className="image" />
+              </CoverView>
+            </CoverView>
+          );
+        })}
         <CoverView slot="callout">
           <CoverView markerId="1" className="maker">
             <CoverImage

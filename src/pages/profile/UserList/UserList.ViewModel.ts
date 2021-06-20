@@ -1,5 +1,6 @@
 import { action, computed, observable } from 'mobx';
 import { ViewModelWithModule } from '@/utils/index';
+import { BaseFDC } from '@/utils/FDC';
 
 export type UserListViewModelViewModelProps = {
   userId: number;
@@ -22,22 +23,40 @@ export class UserListViewModel extends ViewModelWithModule<UserListViewModelView
     this.init();
   }
 
+  @observable.shallow
+  private _FDC: BaseFDC<Base.Follow>;
+
+  @computed
+  get data() {
+    if (this._FDC) {
+      return this._FDC.data;
+    }
+    return [];
+  }
+
+  @action
   init = async () => {
     const { userId, userType } = this._appModule.getRouterParams();
     const { title, functionName } = userConfig[userType];
     this._taro.setNavigationBarTitle({ title });
-    this.data = await this._profileModule[functionName](userId);
+    const requestFunction = ({ index, limit }) =>
+      this._profileModule[functionName]({
+        userId,
+        id: index,
+        limit,
+      });
+    this._FDC = new BaseFDC({
+      requestFunction,
+    });
+    this._FDC.init();
   };
 
   @action
   handleScrollToLower = () => {
-    this.data = this.data.concat(...this.data);
+    this._FDC.loadMore();
   };
 
   handleAvatarClick = (userId: number) => {
     this._taro.navigateTo({ url: `OtherProfile?userId=${userId}` });
   };
-
-  @observable.shallow
-  data: Base.Follow[] = [];
 }

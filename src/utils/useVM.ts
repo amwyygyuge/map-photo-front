@@ -1,5 +1,12 @@
-import { useState } from 'react';
-import { observable, runInAction } from 'mobx';
+import { useState, useEffect } from 'react';
+import {
+  observable,
+  runInAction,
+  reaction,
+  IReactionDisposer,
+  IReactionPublic,
+  IReactionOptions,
+} from 'mobx';
 import {
   getModule,
   APP_MODULE,
@@ -24,6 +31,8 @@ export class ViewModel<T = {}> {
 }
 
 export class ViewModelWithModule<T = {}> extends ViewModel<T> {
+  private _reactionDisposers: IReactionDisposer[] = [];
+
   protected _appModule = getModule<AppModule>(APP_MODULE);
 
   protected _profileModule = getModule<ProfileModule>(PROFILE_MODULE);
@@ -41,6 +50,18 @@ export class ViewModelWithModule<T = {}> extends ViewModel<T> {
   constructor(props: T) {
     super(props);
   }
+
+  protected _reaction = (
+    expression: (r: IReactionPublic) => T,
+    effect: (arg: T, r: IReactionPublic) => void,
+    opts?: IReactionOptions,
+  ) => {
+    this._reactionDisposers.push(reaction(expression, effect, opts));
+  };
+
+  dispose = () => {
+    this._reactionDisposers.forEach((disposer) => disposer());
+  };
 }
 
 function useAsObservableSource<T>(current: T): T {
@@ -51,8 +72,16 @@ function useAsObservableSource<T>(current: T): T {
   return res;
 }
 
-export function useVM<T, P = {}>(M: new (props: P) => T, props): T {
+export function useVM<T extends ViewModelWithModule, P = {}>(
+  M: new (props: P) => T,
+  props,
+): T {
   const observableProps = useAsObservableSource(props);
   const [vm] = useState(() => new M(observableProps));
+  useEffect(() => {
+    return () => {
+      vm?.dispose();
+    };
+  }, []);
   return vm;
 }

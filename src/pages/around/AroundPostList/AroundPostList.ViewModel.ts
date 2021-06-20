@@ -6,35 +6,55 @@ export class AroundPostListViewModel extends ViewModelWithModule {
   constructor() {
     super({});
     this.init();
+    this._reaction(
+      () => this.ids,
+      (ids) => {
+        this.fetchData(ids);
+      },
+      { fireImmediately: true },
+    );
   }
 
   @observable.shallow
-  private _foc: RecommendFDC<Base.Post>;
+  data: Base.PostWithUser[] = [];
+
+  @observable.shallow
+  private _recommendFDC: RecommendFDC<number>;
 
   @computed
-  get data() {
-    return this._foc.data;
+  get ids() {
+    if (this._recommendFDC) {
+      return this._recommendFDC.data;
+    }
+    return [];
   }
 
-  init = () => {
+  init = async () => {
+    const region = this._profileController.region;
     const requestFunction = ({ scroll_id, limit }) =>
-      this._recommendController.getRecommendGlobal({
+      this._recommendController.getRecommendByLocation({
+        region,
         scroll_id,
         limit,
       });
-    this._foc = new RecommendFDC<Base.Post>({
+    this._recommendFDC = new RecommendFDC<number>({
       requestFunction,
-      size: 5,
-      fetchLimit: 50,
-      onNoMoreData() {
-        console.log(1111);
-      },
     });
-    this._foc.init();
+    this._recommendFDC.init();
   };
 
   @action
   handleScrollToLower = () => {
-    this._foc.loadMore();
+    this._recommendFDC.loadMore();
+  };
+
+  @action
+  fetchData = async (ids: number[]) => {
+    if (ids.length !== 0) {
+      const res = await this._profileModule.getPostByIds(ids);
+      this.data = res;
+    } else {
+      this.data = [];
+    }
   };
 }

@@ -5,6 +5,19 @@ import myLocationIcon from '../../../image/myLocation.png';
 import debounce from 'lodash.debounce';
 import { RecommendFDC } from '@/utils/FDC';
 
+const transferPostToMark = (posts: Base.PostWithUser[]) => {
+  return posts.map((post) => {
+    const { cover_photo, id, latitude, longitude } = post;
+    return {
+      cover_photo,
+      id,
+      latitude,
+      longitude,
+      customCallout: { display: 'ALWAYS' },
+    };
+  });
+};
+
 export class AroundViewModel extends ViewModelWithModule {
   @observable.shallow
   private _recommendFDC: RecommendFDC<number>;
@@ -40,8 +53,8 @@ export class AroundViewModel extends ViewModelWithModule {
       longitude,
       title: '我的位置',
       iconPath: dotIcon,
-      with: '60rpx',
-      height: '60rpx',
+      with: 10,
+      height: 10,
     };
   }
 
@@ -54,34 +67,13 @@ export class AroundViewModel extends ViewModelWithModule {
       longitude,
       title: '所选位置',
       iconPath: myLocationIcon,
-      height: '60rpx',
-      with: '60rpx',
+      height: 10,
+      with: 10,
     };
   }
 
-  @observable
-  recommendMarker: any[] = [
-    {
-      id: 1,
-      latitude: 24.47951,
-      longitude: 118.08948,
-      customCallout: {
-        display: 'ALWAYS',
-      },
-      callout: {
-        content: '文本内容',
-        color: '#ff0000',
-        fontSize: 14,
-        borderWidth: 2,
-        borderRadius: 10,
-        borderColor: '#000000',
-        bgColor: '#fff',
-        padding: 5,
-        display: 'ALWAYS',
-        textAlign: 'center',
-      },
-    },
-  ];
+  @observable.shallow
+  recommendMarker: any[] = [];
 
   @computed
   get location() {
@@ -105,11 +97,20 @@ export class AroundViewModel extends ViewModelWithModule {
   constructor() {
     super({});
     when(() => !!this.location.longitude, this.updateFOD);
+    this._reaction(
+      () => this.ids,
+      (ids) => {
+        console.log(ids);
+        this.fetchData(ids);
+      },
+      { fireImmediately: true },
+    );
   }
 
   @action
   updateFOD = async () => {
     const region = (await this._mapContext.getRegion()) as Base.Region;
+    this._profileController.region = region;
     const requestFunction = ({ scroll_id, limit }) =>
       this._recommendController.getRecommendByLocation({
         region,
@@ -118,9 +119,18 @@ export class AroundViewModel extends ViewModelWithModule {
       });
     this._recommendFDC = new RecommendFDC<number>({
       requestFunction,
-      size: 10,
     });
     this._recommendFDC.init();
+  };
+
+  @action
+  fetchData = async (ids: number[]) => {
+    if (ids.length !== 0) {
+      const res = await this._profileModule.getPostByIds(ids);
+      this.recommendMarker = transferPostToMark(res);
+    } else {
+      this.recommendMarker = [];
+    }
   };
 
   handleReload = () => {
@@ -141,13 +151,16 @@ export class AroundViewModel extends ViewModelWithModule {
   };
 
   handleGoToList = () => {
-    this._taro.navigateTo({ url: 'AroundPostList' });
+    const { longitude, latitude } = this.userSelectLocationMarker;
+    this._taro.navigateTo({
+      url: `AroundPostList`,
+    });
   };
 
   handleRegionChange = debounce(
     (e) => {
       if (e.type === 'end') {
-        console.log(e);
+        // TODO
       }
     },
     1500,

@@ -39,11 +39,14 @@ export class PostListViewModel extends ViewModelWithModule<PostListViewModelProp
     }: {
       index: number;
       limit: number;
-    }) => this._profileModule.getUserPost(params.userId, index, limit);
+    }) =>
+      this._profileModule.getUserPost({
+        userId: params.userId as string,
+        id: index,
+        limit,
+      });
     this._foc = new BaseFDC<Base.Post>({
       requestFunction,
-      size: 5,
-      fetchLimit: 50,
       onNoMoreData() {
         console.log(1111);
       },

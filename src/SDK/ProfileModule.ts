@@ -6,6 +6,13 @@ export const PROFILE_MODULE = 'PROFILE_MODULE';
 
 type UserId = number | string;
 
+type UserListParams = { userId: UserId } & Pick<
+  API.getUserListParams,
+  'id' | 'limit'
+>;
+
+const formatUserId = (userId: UserId) => parseInt(`${userId}`, 10);
+
 export class ProfileModule {
   appInstance = Taro.getCurrentInstance();
 
@@ -26,34 +33,37 @@ export class ProfileModule {
 
   async getUserInfo(userId: UserId) {
     const res = await requestController.getUserInfo({
-      id: parseInt(`${userId}`, 10),
+      id: formatUserId(userId),
     });
     return res.data;
   }
 
-  async getUserPost(userId: UserId, id: number, limit: number) {
+  async getUserPost(data: UserListParams) {
+    const { userId, id, limit } = data;
     const res = await requestController.getUserPost({
-      user_id: parseInt(`${userId}`, 10),
+      user_id: formatUserId(userId),
       id,
       limit,
     });
     return res.data;
   }
 
-  async getFollows(userId: UserId) {
+  async getFollows(data: UserListParams) {
+    const { userId, id, limit } = data;
     const res = await requestController.getFollows({
-      follower: parseInt(`${userId}`, 10),
-      id: -1,
-      limit: 100,
+      follower: formatUserId(userId),
+      id,
+      limit,
     });
     return res.data;
   }
 
-  async getFans(userId: UserId) {
+  async getFans(data: UserListParams) {
+    const { userId, id, limit } = data;
     const res = await requestController.getFans({
-      publisher: parseInt(`${userId}`, 10),
-      id: -1,
-      limit: 100,
+      publisher: formatUserId(userId),
+      id,
+      limit,
     });
     return res.data;
   }
@@ -69,10 +79,14 @@ export class ProfileModule {
   }
 
   followUser(userId: UserId) {
-    return requestController.followUser({ publisher: userId });
+    return requestController.followUser({
+      publisher: formatUserId(userId),
+    });
   }
 
   unFollowUser(userId: UserId) {
-    return requestController.unFollowUser({ publisher: userId });
+    return requestController.unFollowUser({
+      publisher: formatUserId(userId),
+    });
   }
 }

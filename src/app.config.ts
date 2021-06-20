@@ -1,6 +1,7 @@
 export default {
   pages: [
     'pages/around/Around',
+    'pages/around/PostDetail',
     'pages/around/AroundPostList',
     'pages/create/Create',
     'pages/profile/Profile',

@@ -17,6 +17,10 @@ import {
   ImageModule,
   RecommendModule,
   RECOMMEND_MODULE,
+  POST_MODULE,
+  PostModule,
+  COMMENT_MODULE,
+  CommentModule,
 } from '@/SDK/index';
 import { getProfileController } from '@/controller/ProfileController';
 import Taro from '@tarojs/taro';
@@ -34,6 +38,10 @@ export class ViewModelWithModule<T = {}> extends ViewModel<T> {
   private _reactionDisposers: IReactionDisposer[] = [];
 
   protected _appModule = getModule<AppModule>(APP_MODULE);
+
+  protected _commentModule = getModule<CommentModule>(COMMENT_MODULE);
+
+  protected _postModule = getModule<PostModule>(POST_MODULE);
 
   protected _profileModule = getModule<ProfileModule>(PROFILE_MODULE);
 

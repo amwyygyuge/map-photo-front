@@ -1,4 +1,4 @@
-import { View, CoverView, Button, CoverImage, Map } from '@tarojs/components';
+import { View, CoverView, CoverImage, Map } from '@tarojs/components';
 import { observer } from 'mobx-react';
 import { useVM } from '@/utils/index';
 import { AroundViewModel } from './Around.ViewModel';
@@ -21,6 +21,7 @@ const Around: FunctionComponent = observer(() => {
     handleRegionChange,
     searchLocation,
     recommendMarker,
+    handleCalloutTap,
   } = useVM(AroundViewModel, {});
   return (
     <View className="map-container">
@@ -47,9 +48,11 @@ const Around: FunctionComponent = observer(() => {
         onRegionChange={handleRegionChange}
         {...location}
         markers={markers}
+        onCalloutTap={handleCalloutTap}
       >
         {recommendMarker.map((mark) => {
           const { id, cover_photo } = mark;
+
           return (
             <CoverView slot="callout" key={id}>
               <CoverView markerId={id} className="maker">

@@ -4,6 +4,8 @@ export default {
     'pages/around/PostDetail',
     'pages/around/AroundPostList',
     'pages/create/Create',
+    'pages/discover/HotSpot',
+    'pages/discover/PostDetail',
     'pages/profile/Profile',
     'pages/profile/OtherProfile',
     'pages/profile/PostList',
@@ -29,12 +31,12 @@ export default {
         selectedIconPath: './image/around.png',
         text: '周边',
       },
-      // {
-      //   pagePath: 'pages/around/index',
-      //   selectedIconPath: './image/find.png',
-      //   iconPath: './image/find.png',
-      //   text: '发现',
-      // },
+      {
+        pagePath: 'pages/discover/HotSpot',
+        selectedIconPath: './image/find.png',
+        iconPath: './image/find.png',
+        text: '发现',
+      },
       {
         pagePath: 'pages/create/Create',
         iconPath: './image/create.png',

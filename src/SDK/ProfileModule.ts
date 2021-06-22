@@ -4,23 +4,19 @@ import { requestController } from '@/utils/RequestController';
 
 export const PROFILE_MODULE = 'PROFILE_MODULE';
 
-type UserId = number | string;
-
-type UserListParams = { userId: UserId } & Pick<
+type UserListParams = { userId: Base.UserId } & Pick<
   API.getUserListParams,
-  'id' | 'limit'
+  'scroll_id' | 'limit'
 >;
 
-const formatUserId = (userId: UserId) => parseInt(`${userId}`, 10);
+const formatUserId = (userId: Base.UserId) => parseInt(`${userId}`, 10);
 
 export class ProfileModule {
-  appInstance = Taro.getCurrentInstance();
-
   constructor() {
     this.init();
   }
 
-  isMe(userId: UserId) {
+  isMe(userId: Base.UserId) {
     return getStore<string>(STORE_KEYS.USER_ID) === `${userId}`;
   }
 
@@ -31,46 +27,31 @@ export class ProfileModule {
     }
   }
 
-  async getUserInfo(userId: UserId) {
+  async getUserInfo(userId: Base.UserId) {
     const res = await requestController.getUserInfo({
       id: formatUserId(userId),
     });
     return res.data;
   }
 
-  async getUserPost(data: UserListParams) {
-    const { userId, id, limit } = data;
-    const res = await requestController.getUserPost({
-      user_id: formatUserId(userId),
-      id,
-      limit,
-    });
-    return res.data;
-  }
-
   async getFollows(data: UserListParams) {
-    const { userId, id, limit } = data;
+    const { userId, scroll_id, limit } = data;
     const res = await requestController.getFollows({
       follower: formatUserId(userId),
-      id,
+      scroll_id,
       limit,
     });
-    return res.data;
+    return res.data ?? [];
   }
 
   async getFans(data: UserListParams) {
-    const { userId, id, limit } = data;
+    const { userId, scroll_id, limit } = data;
     const res = await requestController.getFans({
       publisher: formatUserId(userId),
-      id,
+      scroll_id,
       limit,
     });
-    return res.data;
-  }
-
-  async getPostByIds(ids: UserId[]) {
-    const _ids = ids.map((id) => parseInt(`${id}`, 10));
-    return (await requestController.getPostsByIds({ ids: _ids })).data;
+    return res.data ?? [];
   }
 
   async updateUserInfo() {
@@ -78,13 +59,13 @@ export class ProfileModule {
     return requestController.updateUserInfo(userInfo);
   }
 
-  followUser(userId: UserId) {
+  followUser(userId: Base.UserId) {
     return requestController.followUser({
       publisher: formatUserId(userId),
     });
   }
 
-  unFollowUser(userId: UserId) {
+  unFollowUser(userId: Base.UserId) {
     return requestController.unFollowUser({
       publisher: formatUserId(userId),
     });

@@ -1,6 +1,4 @@
 import { computed, action, observable } from 'mobx';
-import { getModule, PROFILE_MODULE, ProfileModule } from '@/SDK/index';
-import { getProfileController } from '@/controller/ProfileController';
 import { ViewModelWithModule } from '@/utils/index';
 
 export type FollowButtonProps = {
@@ -8,10 +6,6 @@ export type FollowButtonProps = {
   isFollowed: boolean;
 };
 export class FollowButtonViewModel extends ViewModelWithModule<FollowButtonProps> {
-  _profileModule = getModule<ProfileModule>(PROFILE_MODULE);
-
-  profileController = getProfileController();
-
   @observable
   isFollowed: boolean;
 
@@ -22,7 +16,7 @@ export class FollowButtonViewModel extends ViewModelWithModule<FollowButtonProps
 
   @computed
   get isMe() {
-    return this.profileController.userId === this.props.userId;
+    return this._profileController.userId === this.props.userId;
   }
 
   @computed
@@ -32,23 +26,23 @@ export class FollowButtonViewModel extends ViewModelWithModule<FollowButtonProps
 
   @action
   handleClick = async () => {
+    const text = this.isFollowed ? '取消关注' : '关注';
     const doAction = this.isFollowed
       ? this._profileModule.unFollowUser
       : this._profileModule.followUser;
     this.isFollowed = !this.isFollowed;
-    const res = await doAction(this.props.userId);
-    if (res.data! == this.isFollowed) {
-      this._taro.atMessage({
-        type: 'error',
-        message: '关注失败',
-      });
-    } else {
+    try {
+      await doAction(this.props.userId);
       this._taro.atMessage({
         type: 'success',
-        message: '关注成功',
+        message: `${text}成功`,
+      });
+    } catch (error) {
+      this.isFollowed = !this.isFollowed;
+      this._taro.atMessage({
+        type: 'error',
+        message: `${text}失败`,
       });
     }
-
-    this.isFollowed = res.data;
   };
 }

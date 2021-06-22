@@ -1,4 +1,4 @@
-import { observable, computed, action, autorun } from 'mobx';
+import { observable, computed, action } from 'mobx';
 
 interface Options<T> {
   index?: number;
@@ -28,12 +28,30 @@ export class BaseFDC<T> {
 
   @computed
   protected get _endIndex() {
+    if (this._index + this._size > this._maxIndex) {
+      return this._maxIndex;
+    }
     return this._index + this._size;
   }
 
   @computed
-  get maxIndex() {
-    return this._cacheData.length - 1;
+  protected get _maxIndex() {
+    return this._cacheData.length;
+  }
+
+  @computed
+  protected get _rest() {
+    return this._maxIndex - this._endIndex;
+  }
+
+  @computed
+  protected get _hasData() {
+    return this._rest > 0;
+  }
+
+  @computed
+  protected get _realStep() {
+    return this._rest > this._step ? this._step : this._rest;
   }
 
   @observable
@@ -88,7 +106,7 @@ export class BaseFDC<T> {
   // 切片式
   @action
   async nextGroup() {
-    if (this._endIndex + this._size <= this.maxIndex) {
+    if (this._hasData) {
       this._index = this._endIndex;
       return;
     }
@@ -103,19 +121,18 @@ export class BaseFDC<T> {
   // 增量式
   @action
   async loadMore() {
-    console.log(this._endIndex, this._step, this.maxIndex);
     if (this.noMoreData) {
       this._onNoMoreData?.();
       return false;
     }
 
-    if (this._endIndex + this._step <= this.maxIndex) {
-      this._size = this._size + this._step;
+    if (this._hasData) {
+      this._size = this._size + this._realStep;
       return;
     }
     const hasData = await this._fetchData(this._endIndex);
     if (hasData) {
-      this._size = this._size + this._step;
+      this._size = this._size + this._realStep;
       return;
     }
 
@@ -143,7 +160,7 @@ export class RecommendFDC<T> extends BaseFDC<T> {
 
   @action
   async nextGroup() {
-    if (this._endIndex + this._size <= this.maxIndex) {
+    if (this._endIndex + this._size <= this._maxIndex) {
       this._index = this._endIndex;
       return;
     }
@@ -162,13 +179,15 @@ export class RecommendFDC<T> extends BaseFDC<T> {
       this._onNoMoreData?.();
       return false;
     }
-    if (this._endIndex + this._step <= this.maxIndex) {
-      this._size = this._size + this._step;
+
+    if (this._hasData) {
+      this._size = this._size + this._realStep;
       return;
     }
     const hasData = await this._fetchData(this._scrollId);
+
     if (hasData) {
-      this._size = this._size + this._step;
+      this._size = this._size + this._realStep;
       return;
     }
 

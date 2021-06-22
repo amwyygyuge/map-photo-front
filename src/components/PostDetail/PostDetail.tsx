@@ -9,17 +9,21 @@ import { KudosButton } from '../KudosButton';
 import { CommentButton } from '../CommentButton';
 import { ReportButton } from '../ReportButton';
 import { FollowButton } from '../FollowButton';
+import { CommentListComponent } from '../CommentListComponent';
 
 const PostDetailComponent: FunctionComponent = observer(() => {
   const { post, photoArray } = useVM(PostDetailViewModel, {});
   if (!post) return null;
 
   const {
-    user: { nickName, avatarUrl, id },
+    id,
+    user: { nickName, avatarUrl, id: userId },
     created_at,
     comment_count,
     praise_count,
     description,
+    does_self_liked,
+    user_id,
   } = post;
 
   return (
@@ -28,7 +32,7 @@ const PostDetailComponent: FunctionComponent = observer(() => {
       <View className="at-article__h1">
         <AtAvatar image={avatarUrl} circle size="small" />
         <Text className="user-name">{nickName}</Text>
-        <FollowButton userId={id} isFollowed />
+        <FollowButton userId={userId} isFollowed />
       </View>
       <View className="at-article__info sub-title">
         <Text className="time">{created_at}</Text>
@@ -47,11 +51,12 @@ const PostDetailComponent: FunctionComponent = observer(() => {
       </View>
 
       <View className="at-article__info actions">
-        <KudosButton postId={11} isKudos={false} />
-        <CommentButton />
+        <KudosButton postId={id} isKudos={does_self_liked} />
+        <CommentButton postId={id} />
         <ReportButton />
       </View>
       <AtDivider content="评论" />
+      <CommentListComponent postId={id} ownerId={user_id} />
     </View>
   );
 });

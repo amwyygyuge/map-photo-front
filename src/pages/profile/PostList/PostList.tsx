@@ -5,7 +5,6 @@ import {
   PostListViewModelProps,
 } from './PostList.ViewModel';
 import { FunctionComponent } from 'react';
-import './PostList.scss';
 import { PostListComponent } from '@/components/PostListComponent';
 
 const PostList: FunctionComponent<PostListViewModelProps> = observer(

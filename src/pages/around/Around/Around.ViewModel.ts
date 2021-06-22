@@ -4,6 +4,8 @@ import { ViewModelWithModule } from '@/utils/index';
 import myLocationIcon from '../../../image/myLocation.png';
 import debounce from 'lodash.debounce';
 import { RecommendFDC } from '@/utils/FDC';
+import { MapProps } from '@tarojs/components/types/Map';
+import { BaseEventOrig } from '@tarojs/components/types/common';
 
 const transferPostToMark = (posts: Base.PostWithUser[]) => {
   return posts.map((post) => {
@@ -126,7 +128,7 @@ export class AroundViewModel extends ViewModelWithModule {
   @action
   fetchData = async (ids: number[]) => {
     if (ids.length !== 0) {
-      const res = await this._profileModule.getPostByIds(ids);
+      const res = await this._postModule.getPostByIds(ids);
       this.recommendMarker = transferPostToMark(res);
     } else {
       this.recommendMarker = [];
@@ -169,5 +171,12 @@ export class AroundViewModel extends ViewModelWithModule {
 
   handleMoveToMyLocation = () => {
     this._mapContext.moveToLocation(this.location);
+  };
+
+  handleCalloutTap = (e: BaseEventOrig<MapProps.onCalloutTapEventDetail>) => {
+    const { markerId } = e.detail;
+    this._taro.navigateTo({
+      url: `PostDetail?postId=${markerId}`,
+    });
   };
 }

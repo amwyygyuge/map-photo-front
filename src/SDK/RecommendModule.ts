@@ -13,12 +13,19 @@ export class RecommendModule {
       limit: data.limit,
       ...this._transferLocation(data.region),
     };
-    const res = await requestController.getRecommendByLocation(_data);
-    const { list, scroll_id } = res.data;
-    return {
-      scroll_id,
-      list: list ? list : [],
-    };
+    try {
+      const res = await requestController.getRecommendByLocation(_data);
+      const { list, scroll_id } = res.data;
+      return {
+        scroll_id,
+        list: list ? list : [],
+      };
+    } catch (error) {
+      return {
+        scroll_id: '',
+        list: [],
+      };
+    }
   }
 
   private _transferLocation(region: Base.Region) {

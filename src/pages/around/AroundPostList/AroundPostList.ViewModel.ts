@@ -29,7 +29,7 @@ export class AroundPostListViewModel extends ViewModelWithModule {
     return [];
   }
 
-  init = async () => {
+  init = () => {
     const region = this._profileController.region;
     const requestFunction = ({ scroll_id, limit }) =>
       this._recommendController.getRecommendByLocation({
@@ -51,7 +51,7 @@ export class AroundPostListViewModel extends ViewModelWithModule {
   @action
   fetchData = async (ids: number[]) => {
     if (ids.length !== 0) {
-      const res = await this._profileModule.getPostByIds(ids);
+      const res = await this._postModule.getPostByIds(ids);
       this.data = res;
     } else {
       this.data = [];

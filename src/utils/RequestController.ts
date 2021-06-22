@@ -18,10 +18,18 @@ enum BACKEND_ROUTER {
   GET_FOLLOWS = '/ag/user/get_publishers',
   GET_FANS = '/ag/user/get_fans',
   GET_POST_BY_IDS = '/ag/photo/group/get_by_ids',
+  LIKE = '/ag/photo/group/like',
+  UN_LIKE = '/ag/photo/group/un_like',
+  CREATE_COMMENT = '/ag/photo/group/comment/create',
+  GET_HOST_COMMENT = '/ag/photo/group/comment/get_hots',
+  GET_OTHERS_COMMENT = '/ag/photo/group/comment/get_others',
+  LIKE_COMMENT = '/ag/photo/group/comment/like',
+  UN_LIKE_COMMENT = '/ag/photo/group/comment/un_like',
 }
 
 enum STATUS_CODE {
   NEED_LOGIN = 401,
+  SUCCESS = 200,
 }
 
 class RequestController {
@@ -45,11 +53,16 @@ class RequestController {
       Object.assign(options.header, { Authorization: this.jwtToken });
       return Taro.request<Base.Result<T>>(options);
     };
+
     try {
       let result = await doRequest();
       if (result.statusCode === STATUS_CODE.NEED_LOGIN) {
         await this.login();
         result = await doRequest();
+      }
+      if (result.statusCode !== STATUS_CODE.SUCCESS) {
+        logger.warn(url, result.data.message);
+        throw new Error(result.data.message);
       }
       return result.data;
     } catch (error) {
@@ -127,6 +140,20 @@ class RequestController {
     });
   }
 
+  like(data: API.LikeParams) {
+    return this.request<Base.Post[]>({
+      url: BACKEND_ROUTER.LIKE,
+      data,
+    });
+  }
+
+  unlike(data: API.LikeParams) {
+    return this.request<Base.Post[]>({
+      url: BACKEND_ROUTER.UN_LIKE,
+      data,
+    });
+  }
+
   getFollows(data: API.ListParam & { follower: number }) {
     return this.request<Base.Follow[]>({
       url: BACKEND_ROUTER.GET_FOLLOWS,
@@ -137,6 +164,41 @@ class RequestController {
   getFans(data: API.ListParam & { publisher: number }) {
     return this.request<Base.Post[]>({
       url: BACKEND_ROUTER.GET_FANS,
+      data,
+    });
+  }
+
+  createComment(data: API.createCommentParams) {
+    return this.request<Base.Post[]>({
+      url: BACKEND_ROUTER.CREATE_COMMENT,
+      data,
+    });
+  }
+
+  getHotsComment(data: API.getHotsCommentParams) {
+    return this.request<Base.Comment[]>({
+      url: BACKEND_ROUTER.GET_HOST_COMMENT,
+      data,
+    });
+  }
+
+  getOthersComment(data: API.getOthersCommentParams) {
+    return this.request<Base.Comment[]>({
+      url: BACKEND_ROUTER.GET_OTHERS_COMMENT,
+      data,
+    });
+  }
+
+  likeComment(data: API.CommentId) {
+    return this.request<Base.Post[]>({
+      url: BACKEND_ROUTER.LIKE_COMMENT,
+      data,
+    });
+  }
+
+  unLikeComment(data: API.CommentId) {
+    return this.request<Base.Post[]>({
+      url: BACKEND_ROUTER.UN_LIKE_COMMENT,
       data,
     });
   }

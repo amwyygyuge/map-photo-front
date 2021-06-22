@@ -1,4 +1,16 @@
 declare namespace API {
+  type CommentId = {
+    comment_id: number;
+  };
+
+  type PostId = {
+    photo_group_id: number;
+  };
+  type ListParam = {
+    scroll_id: number;
+    limit: number;
+  };
+
   type updateUserInfoParams = {
     wechat_nick_name: string;
     wechat_avatar_url: string;
@@ -27,9 +39,7 @@ declare namespace API {
     created_at: string;
   };
 
-  type preCreateReturn = {
-    photo_group_id: number;
-  };
+  type preCreateReturn = PostId;
 
   type createPostParams = {
     id: number;
@@ -42,26 +52,15 @@ declare namespace API {
     photos: string;
   };
 
-  type createPostReturn = {
-    photo_group_id: number;
-  };
+  type createPostReturn = PostId;
   type getUserInfoParams = {
     id: number;
   };
   type getUserListParams = {
     user_id: number;
-    id: number;
-    limit: number;
-  };
+  } & ListParam;
 
-  type ListParam = {
-    id: number;
-    limit: number;
-  };
-
-  type getUserPostReturn = {
-    photo_group_id: number;
-  };
+  type getUserPostReturn = PostId;
 
   type getRecommendByLocationParams = {
     bottom_right: number[];
@@ -87,4 +86,20 @@ declare namespace API {
     list: number[];
     scroll_id: string;
   };
+
+  type LikeParams = PostId;
+
+  type createCommentParams = {
+    comment: string;
+  } & PostId;
+
+  type getHotsCommentParams = {
+    owner_id: number;
+  } & PostId;
+
+  type getOthersCommentParams = {
+    owner_id: number;
+    hot_comment_ids: number[];
+  } & ListParam &
+    PostId;
 }

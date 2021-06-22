@@ -35,14 +35,14 @@ export class UserListViewModel extends ViewModelWithModule<UserListViewModelView
   }
 
   @action
-  init = async () => {
+  init = () => {
     const { userId, userType } = this._appModule.getRouterParams();
     const { title, functionName } = userConfig[userType];
     this._taro.setNavigationBarTitle({ title });
     const requestFunction = ({ index, limit }) =>
       this._profileModule[functionName]({
         userId,
-        id: index,
+        scroll_id: index,
         limit,
       });
     this._FDC = new BaseFDC({

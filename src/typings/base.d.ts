@@ -1,4 +1,17 @@
 declare namespace Base {
+  type Comment = {
+    children_count: number;
+    comment: string;
+    created_at: string;
+    does_self_liked: boolean;
+    id: number;
+    photo_group_id: number;
+    praise_count: number;
+    scroll_id: number;
+    status: number;
+    user: User;
+    user_like: any;
+  };
   type Location = {
     latitude: number;
     longitude: number;
@@ -28,6 +41,7 @@ declare namespace Base {
     wechat_union_id: string;
   };
 
+  type UserId = number | string;
   type Post = {
     access: number;
     accuracy_count: number;
@@ -47,6 +61,8 @@ declare namespace Base {
     status: number;
     updated_at: string;
     user_id: number;
+    scroll_id: number;
+    does_self_liked: false;
   };
 
   type Attention = {

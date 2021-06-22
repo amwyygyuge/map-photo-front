@@ -9,22 +9,36 @@ export class PostDetailViewModel extends ViewModelWithModule {
   @observable
   post: Base.PostWithUser;
 
+  @observable
+  postId: number;
+
+  @observable
+  ownerId: number;
+
   @computed
   get photoArray() {
-    if (!post) return [];
-    return post.photos.split(',');
+    if (!this.post) return [];
+    return this.post.photos.split(',');
+  }
+
+  @action
+  private _getPostId() {
+    const params = this._appModule.getRouterParams();
+    this.postId = parseInt(params.postId, 10);
   }
 
   constructor() {
     super({});
-    this.getDetail();
+    this._getPostId();
+    this._getDetail();
   }
 
   @action
-  async getDetail() {
-    const params = this._appModule.getRouterParams();
-    const ids = [params.postId];
-    const res = await this._profileModule.getPostByIds(ids);
+  private async _getDetail() {
+    const ids = [this.postId];
+    const res = await this._postModule.getPostByIds(ids);
     this.post = res[0];
+    const { user_id: ownerId } = res[0];
+    this.ownerId = ownerId;
   }
 }

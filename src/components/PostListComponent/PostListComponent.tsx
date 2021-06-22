@@ -39,7 +39,6 @@ export const PostListComponent: FunctionComponent<PostListComponentProps> =
     const [column1, column2] = useMemo(() => {
       const _column1: Base.Post[] = [];
       const _column2: Base.Post[] = [];
-
       for (let i = 0; i < data.length; i++) {
         if (i % 2 === 1) {
           _column1.push(data[i]);
@@ -49,10 +48,10 @@ export const PostListComponent: FunctionComponent<PostListComponentProps> =
       }
       return [_column1, _column2];
     }, [data]);
-
+    if (data.length === 0) return <View>暂无数据</View>;
     return (
       <ScrollView
-        className="list"
+        className="post-list"
         scrollY
         scrollWithAnimation
         enableBackToTop

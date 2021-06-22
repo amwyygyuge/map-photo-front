@@ -27,6 +27,14 @@ export class BaseFDC<T> {
   }
 
   @computed
+  get _lastIndex() {
+    if (this._maxIndex) {
+      return this.data[this._maxIndex - 1].scroll_id;
+    }
+    return -1;
+  }
+
+  @computed
   protected get _endIndex() {
     if (this._index + this._size > this._maxIndex) {
       return this._maxIndex;
@@ -81,13 +89,13 @@ export class BaseFDC<T> {
   }
 
   init = () => {
-    this._fetchData(this._index);
+    this._fetchData();
   };
 
   @action
-  protected async _fetchData(index: number | string) {
+  protected async _fetchData() {
     this.loading = true;
-    const data = await this._handleRequest(index);
+    const data = await this._handleRequest();
     this.loading = false;
     if (data.length === 0) {
       return false;
@@ -96,9 +104,9 @@ export class BaseFDC<T> {
     return true;
   }
 
-  protected _handleRequest(index: number | string) {
+  protected _handleRequest() {
     return this._requestFunction({
-      index: ((index ?? this._endIndex) as number) - 1,
+      index: this._lastIndex,
       limit: this._fetchLimit,
     });
   }
@@ -110,7 +118,7 @@ export class BaseFDC<T> {
       this._index = this._endIndex;
       return;
     }
-    const hasData = await this._fetchData(this._endIndex);
+    const hasData = await this._fetchData();
     if (hasData) {
       this._index = this._endIndex;
       return;
@@ -130,7 +138,7 @@ export class BaseFDC<T> {
       this._size = this._size + this._realStep;
       return;
     }
-    const hasData = await this._fetchData(this._endIndex);
+    const hasData = await this._fetchData();
     if (hasData) {
       this._size = this._size + this._realStep;
       return;

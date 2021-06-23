@@ -6,7 +6,7 @@ export class PostDetailViewModel extends ViewModelWithModule {
     this._imageModule.previewImage([], current);
   };
 
-  @observable
+  @observable.shallow
   post: Base.PostWithUser;
 
   @observable

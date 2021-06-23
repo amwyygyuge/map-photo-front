@@ -64,9 +64,9 @@ export class ViewModelWithModule<T = {}> extends ViewModel<T> {
     this._reactionDisposers.push(reaction(expression, effect, opts));
   };
 
-  dispose = () => {
+  dispose() {
     this._reactionDisposers.forEach((disposer) => disposer());
-  };
+  }
 }
 
 function useAsObservableSource<T>(current: T): T {

@@ -37,7 +37,7 @@ const PostDetailComponent: FunctionComponent = observer(() => {
       <View className="at-article__info sub-title">
         <Text className="time">{created_at}</Text>
         <View className="infos">
-          <AtIcon value="heart-2" /> {praise_count}
+          <AtIcon value="heart-2" color="#E93B3D" /> {praise_count}
           <AtIcon value="message" /> {comment_count}
         </View>
       </View>

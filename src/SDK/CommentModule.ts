@@ -9,6 +9,6 @@ export class CommentModule {
 
   async getHotsComment(data: API.getHotsCommentParams) {
     const res = await requestController.getHotsComment(data);
-    return res.data;
+    return res.data ?? [];
   }
 }

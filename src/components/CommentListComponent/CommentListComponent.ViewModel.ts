@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
-
 import { ViewModelWithModule } from '@/utils/index';
+import { EVENT_KEY } from '../../constants';
 
 export type CommentListComponentViewModelProps = {
   postId: number;
@@ -11,9 +11,29 @@ export class CommentListComponentViewModel extends ViewModelWithModule<CommentLi
   constructor(props: CommentListComponentViewModelProps) {
     super(props);
     this._getHotsComment();
+    this._taro.eventCenter.on(
+      `${EVENT_KEY.NEW_COMMENT}.${this.props.postId}`,
+      this._handleNewComment,
+    );
   }
 
-  @observable
+  @action
+  private _handleNewComment = (comment: Base.Comment) => {
+    this.hotComments = [
+      { ...comment, user: this._profileModule.profile },
+      ...this.hotComments,
+    ];
+  };
+
+  dispose = () => {
+    super.dispose();
+    this._taro.eventCenter.off(
+      `${EVENT_KEY.NEW_COMMENT}.${this.props.postId}`,
+      this._handleNewComment,
+    );
+  };
+
+  @observable.shallow
   hotComments: Base.Comment[] = [];
 
   @action

@@ -13,6 +13,7 @@ enum BACKEND_ROUTER {
   GET_USER_POST = '/ag/photo/group/get_by_user',
   GET_RECOMMEND_BY_LOCATION = '/ag/photo/recommend/geo',
   GET_RECOMMEND_GLOBAL = '/ag/photo/recommend/global',
+  GET_RECOMMEND_NEW = '/ag/photo/recommend/new',
   FOLLOW = '/ag/user/attention',
   UN_FOLLOW = '/ag/user/un_attention',
   GET_FOLLOWS = '/ag/user/get_publishers',
@@ -122,6 +123,13 @@ class RequestController {
   getRecommendGlobal(data: API.getRecommendGlobalParams) {
     return this.request<API.RecommendReturn>({
       url: BACKEND_ROUTER.GET_RECOMMEND_GLOBAL,
+      data,
+    });
+  }
+
+  getRecommendNew(data: API.getRecommendGlobalParams) {
+    return this.request<API.RecommendReturn>({
+      url: BACKEND_ROUTER.GET_RECOMMEND_NEW,
       data,
     });
   }

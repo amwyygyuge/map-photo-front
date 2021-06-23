@@ -39,4 +39,9 @@ export class RecommendModule {
     const res = await requestController.getRecommendGlobal(data);
     return res.data;
   }
+
+  async getRecommendNew(data: API.getRecommendGlobalParams) {
+    const res = await requestController.getRecommendNew(data);
+    return res.data;
+  }
 }

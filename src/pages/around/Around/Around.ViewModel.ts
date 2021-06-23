@@ -16,6 +16,8 @@ const transferPostToMark = (posts: Base.PostWithUser[]) => {
       latitude,
       longitude,
       customCallout: { display: 'ALWAYS' },
+      with: 0,
+      height: 0,
     };
   });
 };
@@ -41,7 +43,7 @@ export class AroundViewModel extends ViewModelWithModule {
   get markers() {
     return [
       ...this.recommendMarker,
-      this.myLocationMarker,
+      // this.myLocationMarker,
       this.userSelectLocationMarker,
     ];
   }
@@ -54,9 +56,9 @@ export class AroundViewModel extends ViewModelWithModule {
       latitude,
       longitude,
       title: '我的位置',
-      iconPath: dotIcon,
-      with: 10,
-      height: 10,
+      // iconPath: dotIcon,
+      // with: 10,
+      // height: 10,
     };
   }
 
@@ -68,9 +70,9 @@ export class AroundViewModel extends ViewModelWithModule {
       latitude,
       longitude,
       title: '所选位置',
-      iconPath: myLocationIcon,
-      height: 10,
-      with: 10,
+      // iconPath: myLocationIcon,
+      // height: 10,
+      // with: 10,
     };
   }
 
@@ -102,7 +104,6 @@ export class AroundViewModel extends ViewModelWithModule {
     this._reaction(
       () => this.ids,
       (ids) => {
-        console.log(ids);
         this.fetchData(ids);
       },
       { fireImmediately: true },
@@ -153,7 +154,6 @@ export class AroundViewModel extends ViewModelWithModule {
   };
 
   handleGoToList = () => {
-    const { longitude, latitude } = this.userSelectLocationMarker;
     this._taro.navigateTo({
       url: `AroundPostList`,
     });

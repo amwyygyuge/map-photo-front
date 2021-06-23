@@ -1,6 +1,3 @@
-import { computed } from 'mobx';
-import { getModule, PROFILE_MODULE, ProfileModule } from '@/SDK/index';
+import { ViewModelWithModule } from '@/utils/index';
 
-export class ReportButtonViewModel {
-  _profileModule = getModule<ProfileModule>(PROFILE_MODULE);
-}
+export class ReportButtonViewModel extends ViewModelWithModule { }

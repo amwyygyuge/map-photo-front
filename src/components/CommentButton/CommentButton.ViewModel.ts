@@ -1,5 +1,6 @@
 import { action, computed, observable } from 'mobx';
 import { ViewModelWithModule } from '@/utils/index';
+import { EVENT_KEY } from '../../constants';
 
 export type CommentButtonProps = {
   postId: number;
@@ -23,11 +24,16 @@ export class CommentButtonViewModel extends ViewModelWithModule<CommentButtonPro
 
   @action
   handleComment = async () => {
-    await this._commentModule.createComment({
+    const res = await this._commentModule.createComment({
       photo_group_id: this.props.postId,
       comment: this.input,
     });
     this.isOpen = false;
+
+    this._taro.eventCenter.trigger(
+      `${EVENT_KEY.NEW_COMMENT}.${this.props.postId}`,
+      res.data,
+    );
   };
 
   @action

@@ -3,6 +3,28 @@ import { ViewModelWithModule } from '@/utils/index';
 import { RecommendFDC } from '@/utils/FDC';
 
 export class HotSpotViewModel extends ViewModelWithModule {
+  @observable
+  currentIndex: number = 0;
+
+  @action
+  handleTabClick = (index: number) => {
+    this._updateFoc(index);
+    this.currentIndex = index;
+  };
+
+  get tabList() {
+    return [
+      {
+        title: '热点',
+        requestFunctionKey: 'getRecommendGlobal',
+      },
+      {
+        title: '最新',
+        requestFunctionKey: 'getRecommendNew',
+      },
+    ];
+  }
+
   constructor() {
     super({});
     this.init();
@@ -29,9 +51,11 @@ export class HotSpotViewModel extends ViewModelWithModule {
     return [];
   }
 
-  init = () => {
+  @action
+  _updateFoc = (index: number) => {
+    const key = this.tabList[index].requestFunctionKey;
     const requestFunction = ({ scroll_id, limit }) =>
-      this._recommendController.getRecommendGlobal({
+      this._recommendController[key]({
         scroll_id,
         limit,
       });
@@ -39,6 +63,10 @@ export class HotSpotViewModel extends ViewModelWithModule {
       requestFunction,
     });
     this._recommendFDC.init();
+  };
+
+  init = () => {
+    this._updateFoc(0);
   };
 
   @action

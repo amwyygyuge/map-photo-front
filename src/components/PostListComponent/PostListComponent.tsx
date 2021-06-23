@@ -26,7 +26,12 @@ const Post = react.memo((props: Base.Post) => (
           用户名
         </View>
         <View className="actions">
-          <AtIcon value="heart" size={20} /> {props.praise_count}
+          {props.does_self_liked ? (
+            <AtIcon value="heart-2" size={20} color="#E93B3D" />
+          ) : (
+            <AtIcon value="heart" size={20} color="#E93B3D" />
+          )}
+          {props.praise_count}
         </View>
       </View>
     </View>

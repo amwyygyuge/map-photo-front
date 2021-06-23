@@ -52,7 +52,6 @@ const Around: FunctionComponent = observer(() => {
       >
         {recommendMarker.map((mark) => {
           const { id, cover_photo } = mark;
-
           return (
             <CoverView slot="callout" key={id}>
               <CoverView markerId={id} className="maker">
@@ -61,15 +60,6 @@ const Around: FunctionComponent = observer(() => {
             </CoverView>
           );
         })}
-        <CoverView slot="callout">
-          <CoverView markerId="1" className="maker">
-            <CoverImage
-              src="cloud://testing-5g65b9i2e503e641.7465-testing-5g65b9i2e503e641-1303943117/pm/11/file/0.jpg"
-              className="image"
-            />
-            {/* <CoverView className="content">dwadada</CoverView> */}
-          </CoverView>
-        </CoverView>
       </Map>
     </View>
   );

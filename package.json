@@ -6,7 +6,7 @@
   "templateInfo": {
     "name": "mobx",
     "typescript": true,
-    "css": "less"
+    "css": "scss"
   },
   "scripts": {
     "build:weapp": "taro build --type weapp",
@@ -36,10 +36,10 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.7.7",
-    "@tarojs/components": "3.2.8",
-    "@tarojs/react": "3.2.8",
-    "@tarojs/runtime": "3.2.8",
-    "@tarojs/taro": "3.2.8",
+    "@tarojs/components": "3.2.13",
+    "@tarojs/react": "3.2.13",
+    "@tarojs/runtime": "3.2.13",
+    "@tarojs/taro": "3.2.13",
     "exifreader": "^3.15.0",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
@@ -47,22 +47,22 @@
     "mobx-react": "6.3.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "taro-ui": "3.0.0-alpha.3"
+    "taro-ui": "3.0.0-alpha.10"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
-    "@tarojs/mini-runner": "3.2.8",
-    "@tarojs/webpack-runner": "3.2.8",
+    "@tarojs/mini-runner": "3.2.13",
+    "@tarojs/webpack-runner": "3.2.13",
     "@types/react": "^17.0.2",
     "@types/webpack-env": "^1.13.6",
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.1",
     "babel-plugin-import": "^1.13.3",
-    "babel-preset-taro": "3.2.8",
+    "babel-preset-taro": "3.2.13",
     "eslint": "^7.26.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-config-taro": "3.2.8",
+    "eslint-config-taro": "3.2.13",
     "eslint-plugin-import": "^2.23.2",
     "eslint-plugin-json-files": "^1.0.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",

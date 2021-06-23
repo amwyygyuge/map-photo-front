@@ -1,7 +1,7 @@
-import './app.scss';
 import { FunctionComponent, useEffect } from 'react';
 import { initModule } from '@/SDK/index';
 import Taro from '@tarojs/taro';
+import './app.scss';
 
 const App: FunctionComponent = (props) => {
   useEffect(() => {

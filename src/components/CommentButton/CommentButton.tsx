@@ -5,8 +5,8 @@ import {
   CommentButtonProps,
 } from './CommentButton.ViewModel';
 import { FunctionComponent } from 'react';
-import './CommentButton.scss';
 import { AtIcon, AtFloatLayout, AtTextarea, AtButton } from 'taro-ui';
+import './CommentButton.scss';
 
 const CommentButton: FunctionComponent<CommentButtonProps> = observer(
   (props) => {

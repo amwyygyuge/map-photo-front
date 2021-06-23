@@ -40,5 +40,6 @@
   "compileType": "miniprogram",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "cloudbaseRoot": "cloudBase/",
+  "libVersion": "2.17.3",
   "condition": {}
 }

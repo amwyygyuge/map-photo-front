@@ -79,7 +79,7 @@ export class AroundViewModel extends ViewModelWithModule {
 
   @computed
   get location() {
-    return this._profileController.location;
+    return this._profileModule.location;
   }
 
   @action
@@ -112,7 +112,7 @@ export class AroundViewModel extends ViewModelWithModule {
   @action
   updateFOD = async () => {
     const region = (await this._mapContext.getRegion()) as Base.Region;
-    this._profileController.region = region;
+    this._profileModule.region = region;
     const requestFunction = ({ scroll_id, limit }) =>
       this._recommendController.getRecommendByLocation({
         region,

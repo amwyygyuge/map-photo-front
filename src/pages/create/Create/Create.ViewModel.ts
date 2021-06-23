@@ -29,7 +29,7 @@ export class CreateViewModel extends ViewModelWithModule {
     if (this.selectedLocation) {
       return this.selectedLocation;
     }
-    return this._profileController.location;
+    return this._profileModule.location;
   }
 
   @observable

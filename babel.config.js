@@ -7,6 +7,9 @@ module.exports = {
       {
         framework: 'react',
         ts: true,
+        targets: {
+          ios: '12',
+        },
       },
     ],
   ],

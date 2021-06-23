@@ -16,7 +16,7 @@ export class FollowButtonViewModel extends ViewModelWithModule<FollowButtonProps
 
   @computed
   get isMe() {
-    return this._profileController.userId === this.props.userId;
+    return this._profileModule.userId === this.props.userId;
   }
 
   @computed

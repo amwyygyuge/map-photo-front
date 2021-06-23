@@ -1,5 +1,4 @@
 import './app.scss';
-import 'reflect-metadata';
 import { FunctionComponent, useEffect } from 'react';
 import { initModule } from '@/SDK/index';
 import Taro from '@tarojs/taro';

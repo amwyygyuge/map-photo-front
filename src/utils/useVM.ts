@@ -22,7 +22,6 @@ import {
   COMMENT_MODULE,
   CommentModule,
 } from '@/SDK/index';
-import { getProfileController } from '@/controller/ProfileController';
 import Taro from '@tarojs/taro';
 
 export class ViewModel<T = {}> {
@@ -48,8 +47,6 @@ export class ViewModelWithModule<T = {}> extends ViewModel<T> {
   protected _imageModule = getModule<ImageModule>(IMAGE_MODULE);
 
   protected _recommendController = getModule<RecommendModule>(RECOMMEND_MODULE);
-
-  protected _profileController = getProfileController();
 
   protected _taro = Taro;
 

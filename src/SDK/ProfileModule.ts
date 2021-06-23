@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro';
 import { getStore, STORE_KEYS } from '@/utils/index';
 import { requestController } from '@/utils/RequestController';
+import { observable, action } from 'mobx';
 
 export const PROFILE_MODULE = 'PROFILE_MODULE';
 
@@ -12,6 +13,40 @@ type UserListParams = { userId: Base.UserId } & Pick<
 const formatUserId = (userId: Base.UserId) => parseInt(`${userId}`, 10);
 
 export class ProfileModule {
+  @observable
+  profile: Base.User;
+
+  region: Base.Region;
+
+  @observable
+  location: {
+    latitude: number;
+    longitude: number;
+    address?: string;
+    name?: string;
+  } = {};
+
+  get userId() {
+    return getStore<number>(STORE_KEYS.USER_ID);
+  }
+
+  @action
+  private _updateLocation = (res) => {
+    this.location = res;
+  };
+
+  @action
+  private _getLocation = async () => {
+    this.location = await Taro.getLocation({ isHighAccuracy: true });
+  };
+
+  @action
+  private _updateUserProfile = async () => {
+    this.profile = await this.getUserInfo(
+      getStore<number>(STORE_KEYS.USER_ID)!,
+    );
+  };
+
   constructor() {
     this.init();
   }
@@ -25,6 +60,9 @@ export class ProfileModule {
       await requestController.login();
       await this.updateUserInfo();
     }
+    this._updateUserProfile();
+    this._getLocation();
+    Taro.onLocationChange(this._updateLocation);
   }
 
   async getUserInfo(userId: Base.UserId) {

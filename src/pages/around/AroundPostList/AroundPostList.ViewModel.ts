@@ -30,7 +30,7 @@ export class AroundPostListViewModel extends ViewModelWithModule {
   }
 
   init = () => {
-    const region = this._profileController.region;
+    const region = this._profileModule.region;
     const requestFunction = ({ scroll_id, limit }) =>
       this._recommendController.getRecommendByLocation({
         region,

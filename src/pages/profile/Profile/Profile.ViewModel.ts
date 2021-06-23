@@ -18,7 +18,7 @@ export class ProfiledViewModel extends ViewModelWithModule {
     if (this._userIdInParams) {
       return this._userIdInParams;
     }
-    return this._profileController.userId;
+    return this._profileModule.userId;
   }
 
   @action
@@ -32,7 +32,7 @@ export class ProfiledViewModel extends ViewModelWithModule {
       });
       return;
     }
-    this.profileData = this._profileController.profile;
+    this.profileData = this._profileModule.profile;
   };
 
   handleGridClick = (item) => {

@@ -21,7 +21,7 @@
     "typeRoots": ["node_modules/@types", "global.d.ts","./src/typings/*.d.ts"],
     "target": "es5",
     "lib": ["es6", "dom"],
-    "types": ["reflect-metadata"],
+    "types": [],
     "emitDecoratorMetadata": true,
     "paths": {
       "@/utils/*": ["./src/utils/*"],

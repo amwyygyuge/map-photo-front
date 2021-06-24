@@ -12,7 +12,7 @@ import { FollowButton } from '../FollowButton';
 import { CommentListComponent } from '../CommentListComponent';
 
 const PostDetailComponent: FunctionComponent = observer(() => {
-  const { post, photoArray } = useVM(PostDetailViewModel, {});
+  const { post, photoArray, preViewImage } = useVM(PostDetailViewModel, {});
   if (!post) return null;
 
   const {
@@ -45,7 +45,12 @@ const PostDetailComponent: FunctionComponent = observer(() => {
         <View className="at-article__p">{description}</View>
         <View className="images">
           {photoArray.map((src) => (
-            <Image key={src} className="at-article__img" src={src} />
+            <Image
+              key={src}
+              className="at-article__img"
+              src={src}
+              onClick={() => preViewImage(src)}
+            />
           ))}
         </View>
       </View>

@@ -3,7 +3,7 @@ import { action, observable, computed } from 'mobx';
 
 export class PostDetailViewModel extends ViewModelWithModule {
   preViewImage = (current: string) => {
-    this._imageModule.previewImage([], current);
+    this._imageModule.previewImage(this.photoArray, current);
   };
 
   @observable.shallow

@@ -91,7 +91,7 @@ export class ImageModule {
   }
 
   compressImage(path: string) {
-    return Taro.compressImage({ src: path, quality: 50 });
+    return Taro.compressImage({ src: path });
   }
 
   async checkMsg(content: string) {

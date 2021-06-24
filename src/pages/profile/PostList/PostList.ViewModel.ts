@@ -16,7 +16,6 @@ export class PostListViewModel extends ViewModelWithModule<PostListViewModelProp
 
   @computed
   get data() {
-    console.log(this._foc.data.length);
     return this._foc.data;
   }
 
@@ -47,9 +46,7 @@ export class PostListViewModel extends ViewModelWithModule<PostListViewModelProp
       });
     this._foc = new BaseFDC<Base.Post>({
       requestFunction,
-      onNoMoreData() {
-        console.log(1111);
-      },
+      onNoMoreData() { },
     });
     this._foc.init();
   };

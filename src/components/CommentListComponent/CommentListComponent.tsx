@@ -9,6 +9,7 @@ import {
 } from './CommentListComponent.ViewModel';
 import { useVM } from '@/utils/index';
 import { KudosButton, KUDOS_TYPE } from '../KudosButton';
+import { CommentButton, COMMENT_TYPE } from '../CommentButton';
 
 const CommentListComponent: FunctionComponent<CommentListComponentViewModelProps> =
   observer((props) => {
@@ -20,10 +21,11 @@ const CommentListComponent: FunctionComponent<CommentListComponentViewModelProps
       <View className="comment-list">
         {hotComments.map((item) => {
           const {
+            id,
             comment,
             does_self_followed,
             praise_count,
-            user: { id, avatarUrl, nickName },
+            user: { id: userId, avatarUrl, nickName },
           } = item;
           return (
             <View className="comment-card at-row" key={id}>
@@ -43,11 +45,12 @@ const CommentListComponent: FunctionComponent<CommentListComponentViewModelProps
               <View className="actions">
                 <KudosButton
                   isKudos={does_self_followed}
-                  id={id}
+                  id={userId}
                   type={KUDOS_TYPE.COMMENT}
                 />
                 {praise_count}
               </View>
+              <CommentButton id={id} type={COMMENT_TYPE.COMMENT} />
             </View>
           );
         })}

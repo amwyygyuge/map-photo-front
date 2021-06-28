@@ -1,4 +1,7 @@
 declare namespace API {
+  type Comment = {
+    comment: string;
+  };
   type CommentId = {
     comment_id: number;
   };
@@ -89,9 +92,8 @@ declare namespace API {
 
   type LikeParams = PostId;
 
-  type createCommentParams = {
-    comment: string;
-  } & PostId;
+  type createCommentParams = Comment & PostId;
+  type createChildCommentParams = Comment & CommentId & { to_user_id?: number };
 
   type getHotsCommentParams = {
     owner_id: number;

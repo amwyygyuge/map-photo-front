@@ -27,6 +27,7 @@ enum BACKEND_ROUTER {
   LIKE_COMMENT = '/ag/photo/group/comment/like',
   UN_LIKE_COMMENT = '/ag/photo/group/comment/un_like',
   GET_BY_PUBLISHERS = '/ag/photo/group/get_by_publishers',
+  CREATE_CHILD_COMMENT = '/ag/photo/group/comment/child/create',
 }
 
 enum STATUS_CODE {
@@ -187,6 +188,13 @@ class RequestController {
   createComment(data: API.createCommentParams) {
     return this.request<Base.Post[]>({
       url: BACKEND_ROUTER.CREATE_COMMENT,
+      data,
+    });
+  }
+
+  createChildComment(data: API.createChildCommentParams) {
+    return this.request<Base.Post[]>({
+      url: BACKEND_ROUTER.CREATE_CHILD_COMMENT,
       data,
     });
   }

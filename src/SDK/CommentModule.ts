@@ -21,4 +21,8 @@ export class CommentModule {
     const res = await requestController.unLikeComment({ comment_id: id });
     return res.data ?? [];
   }
+
+  createChildComment(data: API.createChildCommentParams) {
+    return requestController.createChildComment(data);
+  }
 }

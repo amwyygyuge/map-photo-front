@@ -6,7 +6,7 @@ import { FunctionComponent } from 'react';
 import './PostDetail.scss';
 import { AtAvatar, AtIcon, AtDivider } from 'taro-ui';
 import { KudosButton, KUDOS_TYPE } from '../KudosButton';
-import { CommentButton } from '../CommentButton';
+import { CommentButton, COMMENT_TYPE } from '../CommentButton';
 import { ReportButton } from '../ReportButton';
 import { FollowButton } from '../FollowButton';
 import { CommentListComponent } from '../CommentListComponent';
@@ -56,7 +56,7 @@ const PostDetailComponent: FunctionComponent = observer(() => {
 
       <View className="at-article__info actions">
         <KudosButton id={id} isKudos={does_self_liked} type={KUDOS_TYPE.POST} />
-        <CommentButton postId={id} />
+        <CommentButton id={id} type={COMMENT_TYPE.POST} />
         <ReportButton />
       </View>
       <AtDivider content="评论" />

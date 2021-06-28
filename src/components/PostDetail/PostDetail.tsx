@@ -4,8 +4,8 @@ import { useVM } from '@/utils/index';
 import { PostDetailViewModel } from './PostDetail.ViewModel';
 import { FunctionComponent } from 'react';
 import './PostDetail.scss';
-import { AtAvatar, AtIcon, AtDivider, AtMessage } from 'taro-ui';
-import { KudosButton } from '../KudosButton';
+import { AtAvatar, AtIcon, AtDivider } from 'taro-ui';
+import { KudosButton, KUDOS_TYPE } from '../KudosButton';
 import { CommentButton } from '../CommentButton';
 import { ReportButton } from '../ReportButton';
 import { FollowButton } from '../FollowButton';
@@ -28,7 +28,6 @@ const PostDetailComponent: FunctionComponent = observer(() => {
 
   return (
     <View className="at-article detail">
-      <AtMessage />
       <View className="at-article__h1">
         <AtAvatar image={avatarUrl} circle size="small" />
         <Text className="user-name">{nickName}</Text>
@@ -56,7 +55,7 @@ const PostDetailComponent: FunctionComponent = observer(() => {
       </View>
 
       <View className="at-article__info actions">
-        <KudosButton postId={id} isKudos={does_self_liked} />
+        <KudosButton id={id} isKudos={does_self_liked} type={KUDOS_TYPE.POST} />
         <CommentButton postId={id} />
         <ReportButton />
       </View>

@@ -11,4 +11,14 @@ export class CommentModule {
     const res = await requestController.getHotsComment(data);
     return res.data ?? [];
   }
+
+  async like(id: number) {
+    const res = await requestController.likeComment({ comment_id: id });
+    return res.data ?? [];
+  }
+
+  async unLike(id: number) {
+    const res = await requestController.unLikeComment({ comment_id: id });
+    return res.data ?? [];
+  }
 }

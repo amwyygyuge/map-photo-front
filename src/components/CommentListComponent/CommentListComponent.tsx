@@ -2,12 +2,13 @@ import { View, Text } from '@tarojs/components';
 import { observer } from 'mobx-react';
 import { FunctionComponent } from 'react';
 import './CommentListComponent.scss';
-import { AtAvatar, AtMessage } from 'taro-ui';
+import { AtAvatar } from 'taro-ui';
 import {
   CommentListComponentViewModel,
   CommentListComponentViewModelProps,
 } from './CommentListComponent.ViewModel';
 import { useVM } from '@/utils/index';
+import { KudosButton, KUDOS_TYPE } from '../KudosButton';
 
 const CommentListComponent: FunctionComponent<CommentListComponentViewModelProps> =
   observer((props) => {
@@ -16,15 +17,16 @@ const CommentListComponent: FunctionComponent<CommentListComponentViewModelProps
     if (hotComments.length === 0) return <View>暂无数据</View>;
 
     return (
-      <View className="list">
-        <AtMessage />
+      <View className="comment-list">
         {hotComments.map((item) => {
           const {
             comment,
+            does_self_followed,
+            praise_count,
             user: { id, avatarUrl, nickName },
           } = item;
           return (
-            <View className="post-card at-row" key={id}>
+            <View className="comment-card at-row" key={id}>
               <View className="user-info">
                 <AtAvatar
                   circle
@@ -37,6 +39,14 @@ const CommentListComponent: FunctionComponent<CommentListComponentViewModelProps
                   <Text className="userName">{nickName}</Text>
                   {comment}
                 </View>
+              </View>
+              <View className="actions">
+                <KudosButton
+                  isKudos={does_self_followed}
+                  id={id}
+                  type={KUDOS_TYPE.COMMENT}
+                />
+                {praise_count}
               </View>
             </View>
           );

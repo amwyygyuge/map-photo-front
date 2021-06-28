@@ -1,4 +1,5 @@
 import { requestController } from '@/utils/RequestController';
+import { formatStringId } from '@/utils/index';
 
 export const RECOMMEND_MODULE = 'RECOMMEND_MODULE';
 
@@ -43,5 +44,13 @@ export class RecommendModule {
   async getRecommendNew(data: API.getRecommendGlobalParams) {
     const res = await requestController.getRecommendNew(data);
     return res.data;
+  }
+
+  async getByPublishers({ limit, scroll_id }: API.getRecommendGlobalParams) {
+    const res = await requestController.getByPublishers({
+      scroll_id: formatStringId(scroll_id),
+      limit,
+    });
+    return Array.isArray(res.data) ? res.data : [];
   }
 }

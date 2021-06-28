@@ -2,7 +2,7 @@ import { ScrollView, View, Text } from '@tarojs/components';
 import { observer } from 'mobx-react';
 import { FunctionComponent } from 'react';
 import './UserListComponent.scss';
-import { AtAvatar, AtMessage } from 'taro-ui';
+import { AtAvatar } from 'taro-ui';
 import { FollowButton } from '../FollowButton';
 import { CommonEventFunction } from '@tarojs/components/types/common';
 
@@ -26,7 +26,6 @@ const UserListComponent: FunctionComponent<UserListViewProps> = observer(
         refresherBackground="#000"
         onScrollToLower={onScrollToLower}
       >
-        <AtMessage />
         {data.map((item) => {
           const {
             does_self_followed,

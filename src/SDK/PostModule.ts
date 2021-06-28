@@ -1,8 +1,8 @@
 import { requestController } from '@/utils/RequestController';
 
-export const POST_MODULE = 'POST_MODULE';
+import { formatStringId } from '@/utils/index';
 
-const formatUserId = (userId: Base.UserId) => parseInt(`${userId}`, 10);
+export const POST_MODULE = 'POST_MODULE';
 
 type UserListParams = { userId: Base.UserId } & Pick<
   API.getUserListParams,
@@ -17,7 +17,7 @@ export class PostModule {
   async getUserPost(data: UserListParams) {
     const { userId, scroll_id, limit } = data;
     const res = await requestController.getUserPost({
-      user_id: formatUserId(userId),
+      user_id: formatStringId(userId),
       scroll_id,
       limit,
     });

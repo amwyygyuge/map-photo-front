@@ -1,5 +1,5 @@
-.list {
-  .post-card {
+.comment-list {
+  .comment-card {
     margin: 12rpx auto;
     background: #fff;
     border-radius: 8px 8px 0 0;
@@ -10,9 +10,6 @@
     .user-info {
       display: flex;
       align-items: center;
-      // navigator {
-      //   display: inline-block;
-      // }
       view.avatar {
         width: 70rpx;
         height: 70rpx;

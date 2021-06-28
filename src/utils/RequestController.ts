@@ -26,6 +26,7 @@ enum BACKEND_ROUTER {
   GET_OTHERS_COMMENT = '/ag/photo/group/comment/get_others',
   LIKE_COMMENT = '/ag/photo/group/comment/like',
   UN_LIKE_COMMENT = '/ag/photo/group/comment/un_like',
+  GET_BY_PUBLISHERS = '/ag/photo/group/get_by_publishers',
 }
 
 enum STATUS_CODE {
@@ -88,6 +89,13 @@ class RequestController {
   createPost(data: API.createPostParams) {
     return this.request<API.createPostReturn>({
       url: BACKEND_ROUTER.CREATE_POST,
+      data,
+    });
+  }
+
+  getByPublishers(data: API.ListParam) {
+    return this.request<API.createPostReturn>({
+      url: BACKEND_ROUTER.GET_BY_PUBLISHERS,
       data,
     });
   }

@@ -11,6 +11,7 @@ declare namespace Base {
     status: number;
     user: User;
     user_like: any;
+    does_self_followed: boolean;
   };
   type Location = {
     latitude: number;

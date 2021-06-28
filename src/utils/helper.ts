@@ -27,3 +27,6 @@ export const setStore = (key: STORE_KEYS, data: any) => {
     return false;
   }
 };
+
+export const formatStringId = (userId: Base.UserId) =>
+  parseInt(`${userId}`, 10);

@@ -33,15 +33,15 @@ export class PostListViewModel extends ViewModelWithModule<PostListViewModelProp
   init = () => {
     const params = this._appModule.getRouterParams();
     const requestFunction = ({
-      index,
+      scroll_id,
       limit,
     }: {
-      index: number;
+      scroll_id: number;
       limit: number;
     }) =>
       this._postModule.getUserPost({
         userId: params.userId as string,
-        scroll_id: index,
+        scroll_id,
         limit,
       });
     this._foc = new BaseFDC<Base.Post>({

@@ -97,7 +97,7 @@ export class BaseFDC<T> {
     this.loading = true;
     const data = await this._handleRequest();
     this.loading = false;
-    if (data.length === 0) {
+    if (data && data.length === 0) {
       return false;
     }
     this._cacheData = this._cacheData.concat(data);
@@ -106,7 +106,7 @@ export class BaseFDC<T> {
 
   protected _handleRequest() {
     return this._requestFunction({
-      index: this._lastIndex,
+      scroll_id: this._lastIndex,
       limit: this._fetchLimit,
     });
   }
@@ -163,7 +163,7 @@ export class RecommendFDC<T> extends BaseFDC<T> {
       limit: this._fetchLimit,
     });
     this._scrollId = scroll_id;
-    return list;
+    return Array.isArray(list) ? list : [];
   }
 
   @action

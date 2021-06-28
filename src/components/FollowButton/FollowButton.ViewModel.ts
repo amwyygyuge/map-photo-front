@@ -33,15 +33,14 @@ export class FollowButtonViewModel extends ViewModelWithModule<FollowButtonProps
     this.isFollowed = !this.isFollowed;
     try {
       await doAction(this.props.userId);
-      this._taro.atMessage({
-        type: 'success',
-        message: `${text}成功`,
+      this._taro.showToast({
+        icon: 'success',
+        title: `${text}成功`,
       });
     } catch (error) {
       this.isFollowed = !this.isFollowed;
-      this._taro.atMessage({
-        type: 'error',
-        message: `${text}失败`,
+      this._taro.showToast({
+        title: `${text}失败`,
       });
     }
   };

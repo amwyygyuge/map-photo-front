@@ -1,3 +1,3 @@
 import { ViewModelWithModule } from '@/utils/index';
 
-export class ReportButtonViewModel extends ViewModelWithModule { }
+export class ReportButtonViewModel extends ViewModelWithModule {}

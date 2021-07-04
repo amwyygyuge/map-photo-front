@@ -17,7 +17,7 @@ const PostDetailComponent: FunctionComponent = observer(() => {
 
   const {
     id,
-    user: { nickName, avatarUrl, id: userId },
+    user_info: { nickName, avatarUrl, id: userId, does_self_followed },
     created_at,
     comment_count,
     praise_count,
@@ -31,7 +31,7 @@ const PostDetailComponent: FunctionComponent = observer(() => {
       <View className="at-article__h1">
         <AtAvatar image={avatarUrl} circle size="small" />
         <Text className="user-name">{nickName}</Text>
-        <FollowButton userId={userId} isFollowed />
+        <FollowButton userId={userId} isFollowed={does_self_followed} />
       </View>
       <View className="at-article__info sub-title">
         <Text className="time">{created_at}</Text>

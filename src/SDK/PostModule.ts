@@ -32,4 +32,9 @@ export class PostModule {
   unLike(id: number) {
     return requestController.unlike({ photo_group_id: id });
   }
+
+  async getLikeList(data: API.ListParam) {
+    const res = await requestController.getLikeList(data);
+    return res.data ?? [];
+  }
 }

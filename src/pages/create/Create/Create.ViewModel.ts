@@ -76,11 +76,11 @@ export class CreateViewModel extends ViewModelWithModule {
   handleSubmit = async () => {
     this._taro.showLoading({ title: '发布中，请稍后...', mask: true });
 
-    if (!(await this._imageModule.checkImages(this.imagePants))) {
-      this._taro.showToast({ title: '图片审核不通过，请检查上传的图片。' });
-      this._taro.hideLoading();
-      return;
-    }
+    // if (!(await this._imageModule.checkImages(this.imagePants))) {
+    //   this._taro.showToast({ title: '图片审核不通过，请检查上传的图片。' });
+    //   this._taro.hideLoading();
+    //   return;
+    // }
     if (!(await this._imageModule.checkMsg(this.description))) {
       this._taro.showToast({ title: '文本内容审核不通过，请检查文本内容。' });
       this._taro.hideLoading();

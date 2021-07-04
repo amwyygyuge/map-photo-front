@@ -5,6 +5,18 @@ import { BaseFDC } from '@/utils/FDC';
 export type PostListViewModelProps = {
   userId: number;
 };
+
+const config = {
+  self: {
+    title: '我的作品',
+    functionName: 'getUserPost',
+  },
+  like: {
+    title: '点赞的作品',
+    functionName: 'getLikeList',
+  },
+};
+
 export class PostListViewModel extends ViewModelWithModule<PostListViewModelProps> {
   constructor(props: PostListViewModelProps) {
     super(props);
@@ -31,7 +43,9 @@ export class PostListViewModel extends ViewModelWithModule<PostListViewModelProp
   }
 
   init = () => {
-    const params = this._appModule.getRouterParams();
+    const { userId, type } = this._appModule.getRouterParams();
+    const { title, functionName } = config[type];
+    this._taro.setNavigationBarTitle({ title });
     const requestFunction = ({
       scroll_id,
       limit,
@@ -39,8 +53,8 @@ export class PostListViewModel extends ViewModelWithModule<PostListViewModelProp
       scroll_id: number;
       limit: number;
     }) =>
-      this._postModule.getUserPost({
-        userId: params.userId as string,
+      this._postModule[functionName]({
+        userId: userId as string,
         scroll_id,
         limit,
       });

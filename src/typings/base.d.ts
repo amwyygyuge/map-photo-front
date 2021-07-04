@@ -10,7 +10,7 @@ declare namespace Base {
     scroll_id: number;
     status: number;
     user: User;
-    user_like: any;
+    user_like: null;
     does_self_followed: boolean;
   };
   type Location = {
@@ -22,6 +22,12 @@ declare namespace Base {
     message: string;
     data: T;
   }
+  type UserLike = {
+    created_at: string;
+    id: number;
+    target_id: number;
+    user_id: number;
+  };
   type User = {
     avatarUrl: string;
     city: string;
@@ -79,7 +85,7 @@ declare namespace Base {
     user: User;
   };
 
-  type PostWithUser = Post & { user: User };
+  type PostWithUser = Post & { user_info: User };
   type Region = {
     northeast: Location;
     southwest: Location;

@@ -36,7 +36,7 @@ const PostDetailComponent: FunctionComponent = observer(() => {
       <View className="at-article__info sub-title">
         <Text className="time">{created_at}</Text>
         <View className="infos">
-          <AtIcon value="heart-2" color="#E93B3D" /> {praise_count}
+          {/* <AtIcon value="heart-2" color="#E93B3D" /> {praise_count} */}
           <AtIcon value="message" /> {comment_count}
         </View>
       </View>
@@ -55,7 +55,12 @@ const PostDetailComponent: FunctionComponent = observer(() => {
       </View>
 
       <View className="at-article__info actions">
-        <KudosButton id={id} isKudos={does_self_liked} type={KUDOS_TYPE.POST} />
+        <KudosButton
+          id={id}
+          isKudos={does_self_liked}
+          type={KUDOS_TYPE.POST}
+          count={praise_count}
+        />
         <CommentButton id={id} type={COMMENT_TYPE.POST} />
         <ReportButton />
       </View>

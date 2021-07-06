@@ -6,6 +6,10 @@ declare namespace API {
     comment_id: number;
   };
 
+  type ChildCommentId = {
+    child_comment_id: number;
+  };
+
   type PostId = {
     photo_group_id: number;
   };
@@ -98,6 +102,10 @@ declare namespace API {
   type getHotsCommentParams = {
     owner_id: number;
   } & PostId;
+
+  type getHostChildCommentParams = {
+    owner_id: number;
+  } & CommentId;
 
   type getOthersCommentParams = {
     owner_id: number;

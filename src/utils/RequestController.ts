@@ -28,6 +28,9 @@ enum BACKEND_ROUTER {
   UN_LIKE_COMMENT = '/ag/photo/group/comment/un_like',
   GET_BY_PUBLISHERS = '/ag/photo/group/get_by_publishers',
   CREATE_CHILD_COMMENT = '/ag/photo/group/comment/child/create',
+  GET_CHILD_HOST_COMMENT = '/ag/photo/group/comment/child/get_hots',
+  LIKE_CHILD_COMMENT = '/ag/photo/group/comment/child/like',
+  UN_LIKE_CHILD_COMMENT = '/ag/photo/group/comment/child/un_like',
   GET_KIKE_LIST = '/ag/photo/group/get_like_list',
 }
 
@@ -224,6 +227,27 @@ class RequestController {
   unLikeComment(data: API.CommentId) {
     return this.request<Base.Post[]>({
       url: BACKEND_ROUTER.UN_LIKE_COMMENT,
+      data,
+    });
+  }
+
+  likeChildComment(data: API.ChildCommentId) {
+    return this.request<Base.Post[]>({
+      url: BACKEND_ROUTER.LIKE_CHILD_COMMENT,
+      data,
+    });
+  }
+
+  unLikeChildComment(data: API.ChildCommentId) {
+    return this.request<Base.Post[]>({
+      url: BACKEND_ROUTER.UN_LIKE_CHILD_COMMENT,
+      data,
+    });
+  }
+
+  getChildHotsComment(data: API.getHostChildCommentParams) {
+    return this.request<Base.ChildComment[]>({
+      url: BACKEND_ROUTER.GET_CHILD_HOST_COMMENT,
       data,
     });
   }

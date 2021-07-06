@@ -9,11 +9,21 @@ import './KudosButton.scss';
 import { AtIcon } from 'taro-ui';
 
 const KudosButton: FunctionComponent<KudosButtonProps> = observer((props) => {
-  const { handleClick, isKudos } = useVM(KudosButtonViewModel, props);
+  const { handleClick, isKudos, count } = useVM(KudosButtonViewModel, props);
   if (isKudos) {
-    return <AtIcon value="heart-2" onClick={handleClick} color="#E93B3D" />;
+    return (
+      <>
+        <AtIcon value="heart-2" onClick={handleClick} color="#E93B3D" />
+        {count}
+      </>
+    );
   }
-  return <AtIcon value="heart" onClick={handleClick} color="#E93B3D" />;
+  return (
+    <>
+      <AtIcon value="heart" onClick={handleClick} color="#E93B3D" />
+      {count}
+    </>
+  );
 });
 
 export { KudosButton };

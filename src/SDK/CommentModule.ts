@@ -22,6 +22,25 @@ export class CommentModule {
     return res.data ?? [];
   }
 
+  async likeChildComment(id: number) {
+    const res = await requestController.likeChildComment({
+      child_comment_id: id,
+    });
+    return res.data ?? [];
+  }
+
+  async unLikeChildComment(id: number) {
+    const res = await requestController.unLikeChildComment({
+      child_comment_id: id,
+    });
+    return res.data ?? [];
+  }
+
+  async getChildHotsComment(data: API.getHostChildCommentParams) {
+    const res = await requestController.getChildHotsComment(data);
+    return res.data ?? [];
+  }
+
   createChildComment(data: API.createChildCommentParams) {
     return requestController.createChildComment(data);
   }

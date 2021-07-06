@@ -11,8 +11,13 @@ declare namespace Base {
     status: number;
     user: User;
     user_like: null;
-    does_self_followed: boolean;
+    user_id: number;
   };
+  type ChildComment = {
+    from_user: User;
+    from_user_id: number;
+  } & Omit<Comment, 'children_count' | 'user' | 'user_id'>;
+
   type Location = {
     latitude: number;
     longitude: number;

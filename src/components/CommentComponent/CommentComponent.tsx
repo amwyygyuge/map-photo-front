@@ -5,15 +5,80 @@ import {
   CommentComponentProps,
 } from './CommentComponent.ViewModel';
 import { FunctionComponent } from 'react';
-import { AtIcon } from 'taro-ui';
+import { View, Text } from '@tarojs/components';
+import { KudosButton, KUDOS_TYPE } from '../KudosButton';
+import { CommentButton, COMMENT_TYPE } from '../CommentButton';
+import { AtAvatar } from 'taro-ui';
+import './CommentComponent.scss';
 
 const CommentComponent: FunctionComponent<CommentComponentProps> = observer(
   (props) => {
-    const { handleClick, isKudos } = useVM(CommentComponentViewModel, props);
-    if (isKudos) {
-      return <AtIcon value="heart-2" onClick={handleClick} color="#E93B3D" />;
-    }
-    return <AtIcon value="heart" onClick={handleClick} color="#E93B3D" />;
+    const {
+      id,
+      comment,
+      does_self_liked,
+      praise_count,
+      user: { avatarUrl, nickName },
+    } = props.comment;
+
+    const { hotComments } = useVM(CommentComponentViewModel, props);
+
+    return (
+      <>
+        <View className="comment-card at-row">
+          <View className="user-info">
+            <AtAvatar
+              circle
+              size="small"
+              text="头像"
+              className="avatar"
+              image={avatarUrl}
+            />
+            <View className="infos">
+              <Text className="userName">{nickName}</Text>
+              {comment}
+            </View>
+          </View>
+          <View className="actions">
+            <KudosButton
+              isKudos={does_self_liked}
+              id={id}
+              type={KUDOS_TYPE.COMMENT}
+              count={praise_count}
+            />
+          </View>
+          <CommentButton id={id} type={COMMENT_TYPE.COMMENT} />
+        </View>
+
+        {hotComments.map((item) => {
+          return (
+            <View className="comment-card at-row child-comment" key={item.id}>
+              <View className="user-info">
+                <AtAvatar
+                  circle
+                  size="small"
+                  text="头像"
+                  className="avatar"
+                  image={item.from_user.avatarUrl}
+                />
+                <View className="infos">
+                  <Text className="userName">{item.from_user.nickName}</Text>
+                  {item.comment}
+                </View>
+              </View>
+              <View className="actions">
+                <KudosButton
+                  isKudos={item.does_self_liked}
+                  id={item.id}
+                  type={KUDOS_TYPE.CHILD_COMMENT}
+                  count={item.praise_count}
+                />
+              </View>
+            </View>
+          );
+        })}
+      </>
+    );
   },
 );
 

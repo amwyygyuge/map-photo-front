@@ -21,6 +21,8 @@ import {
   PostModule,
   COMMENT_MODULE,
   CommentModule,
+  NotifyModule,
+  NOTIFY_MODULE,
 } from '@/SDK/index';
 import Taro from '@tarojs/taro';
 
@@ -37,6 +39,8 @@ export class ViewModelWithModule<T = {}> extends ViewModel<T> {
   private _reactionDisposers: IReactionDisposer[] = [];
 
   protected _appModule = getModule<AppModule>(APP_MODULE);
+
+  protected _notifyModule = getModule<NotifyModule>(NOTIFY_MODULE);
 
   protected _commentModule = getModule<CommentModule>(COMMENT_MODULE);
 

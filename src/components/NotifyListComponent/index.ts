@@ -1,0 +1,1 @@
+export { NotifyListComponent } from './NotifyListComponent';

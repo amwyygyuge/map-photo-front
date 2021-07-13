@@ -11,6 +11,7 @@ export default {
     'pages/profile/PostList',
     'pages/profile/PostDetail',
     'pages/profile/UserList',
+    'pages/message/List',
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -43,12 +44,12 @@ export default {
         selectedIconPath: './image/create.png',
         text: '发布',
       },
-      // {
-      //   pagePath: 'pages/around/index',
-      //   selectedIconPath: './image/focus.png',
-      //   iconPath: './image/focus.png',
-      //   text: '关注',
-      // },
+      {
+        pagePath: 'pages/message/List',
+        selectedIconPath: './image/focus.png',
+        iconPath: './image/focus.png',
+        text: '消息',
+      },
       {
         pagePath: 'pages/profile/Profile',
         selectedIconPath: './image/my.png',

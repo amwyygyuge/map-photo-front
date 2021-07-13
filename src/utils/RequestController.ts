@@ -32,6 +32,10 @@ enum BACKEND_ROUTER {
   LIKE_CHILD_COMMENT = '/ag/photo/group/comment/child/like',
   UN_LIKE_CHILD_COMMENT = '/ag/photo/group/comment/child/un_like',
   GET_KIKE_LIST = '/ag/photo/group/get_like_list',
+  HAS_UN_READ = '/ag/notify/has_un_read',
+  GET_UN_READ = '/ag/notify/list',
+  READ_NOTIFY = '/ag/notify/read_all',
+  GET_NOTIFY_TYPE = '/ag/notify/type/list',
 }
 
 enum STATUS_CODE {
@@ -256,6 +260,32 @@ class RequestController {
     return this.request<Base.Post[]>({
       url: BACKEND_ROUTER.GET_KIKE_LIST,
       data,
+    });
+  }
+
+  hasUnRead() {
+    return this.request<Boolean>({
+      url: BACKEND_ROUTER.HAS_UN_READ,
+      data: {},
+    });
+  }
+
+  getUnRead(data: API.ListParam) {
+    return this.request<Base.Notify[]>({
+      url: BACKEND_ROUTER.GET_UN_READ,
+      data,
+    });
+  }
+
+  readAll() {
+    return this.request<Base.Post[]>({
+      url: BACKEND_ROUTER.READ_NOTIFY,
+    });
+  }
+
+  getNotifyType() {
+    return this.request<Base.Post[]>({
+      url: BACKEND_ROUTER.GET_NOTIFY_TYPE,
     });
   }
 

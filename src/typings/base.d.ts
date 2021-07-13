@@ -1,4 +1,16 @@
 declare namespace Base {
+  type Notify = {
+    created_at: string;
+    id: number;
+    if_read: number;
+    msg: string;
+    msg_arr: [];
+    page: string;
+    scroll_id: number;
+    target_user_id: number;
+    title: string;
+    type: number;
+  };
   type Comment = {
     children_count: number;
     comment: string;

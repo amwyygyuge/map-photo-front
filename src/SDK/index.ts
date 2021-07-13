@@ -5,3 +5,4 @@ export * from './RecommendModule';
 export * from './AppModule';
 export * from './PostModule';
 export * from './CommentModule';
+export * from './NotifyModule';

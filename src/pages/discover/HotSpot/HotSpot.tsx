@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import { useVM } from '@/utils/index';
 import { HotSpotViewModel } from './HotSpot.ViewModel';
 import { FunctionComponent } from 'react';
-import './HotSpot.scss';
+
 import { AtTabs, AtTabsPane } from 'taro-ui';
 import { PostListComponent } from '@/components/PostListComponent';
 

@@ -31,7 +31,7 @@ const Create: FunctionComponent = observer(() => {
     accessLabel,
   } = useVM(CreateViewModel, {});
   return (
-    <AtForm className="container" onSubmit={handleSubmit}>
+    <AtForm className="create-container" onSubmit={handleSubmit}>
       <AtTextarea
         className="textArea"
         maxLength={200}

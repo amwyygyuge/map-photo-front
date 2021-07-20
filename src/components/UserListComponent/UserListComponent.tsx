@@ -19,7 +19,7 @@ const UserListComponent: FunctionComponent<UserListViewProps> = observer(
 
     return (
       <ScrollView
-        className="list"
+        className="user-list"
         scrollY
         scrollWithAnimation
         enableBackToTop
@@ -32,7 +32,7 @@ const UserListComponent: FunctionComponent<UserListViewProps> = observer(
             user: { id, avatarUrl, fans_count, follow_count, nickName },
           } = item;
           return (
-            <View className="post-card at-row" key={id}>
+            <View className="user-card at-row" key={id}>
               <View className="user-info" onClick={() => onAvatarClick(id)}>
                 <AtAvatar
                   circle

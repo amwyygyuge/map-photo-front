@@ -12,7 +12,7 @@ const Profile: FunctionComponent = observer(() => {
   const { avatarUrl, nickName } = profileData;
 
   return (
-    <View className="index">
+    <View className="profile-container">
       <AtAvatar circle className="avatar" image={avatarUrl} />
       <View className="at-article__h2">{nickName}</View>
       <AtGrid

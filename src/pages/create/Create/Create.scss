@@ -1,8 +1,7 @@
-.container{
+.create-container {
   padding: 0 12px;
-  height:100vh;
-
-  .location{
+  height: 100vh;
+  .location {
     margin: 0px 30px;
     display: flex;
     align-items: center;
@@ -10,24 +9,24 @@
     align-items: center;
     margin-top: -14px;
     margin-bottom: 30px;
-    border-bottom: 1PX solid #CCC;
-     padding: 20px 0 ;
+    border-bottom: 1px solid #ccc;
+    padding: 20px 0;
     text {
-      color: #3F536E;
+      color: #3f536e;
       margin-left: 20px;
       font-size: 26px;
     }
   }
-  .textArea{
+  .textArea {
     border: none;
   }
-  .buttons{
+  .buttons {
     position: absolute;
     bottom: 50rpx;
     width: 100%;
     display: flex;
     justify-content: center;
-    .at-button{
+    .at-button {
       width: 35%;
     }
   }

@@ -1,9 +1,9 @@
-import { Navigator, View, Image } from '@tarojs/components';
+import { Navigator, ScrollView, View, Image } from '@tarojs/components';
 import { observer } from 'mobx-react';
 import react, { FunctionComponent, useMemo } from 'react';
 import './PostListComponent.scss';
 import { AtAvatar, AtIcon } from 'taro-ui';
-import { ScrollViewComponent } from '../ScrollView';
+import { useRefresherTriggered } from '../hooks';
 
 type PostListComponentProps = {
   onScrollToLower: () => void;
@@ -43,7 +43,8 @@ const Post = react.memo((props: Base.Post) => (
 export const PostListComponent: FunctionComponent<PostListComponentProps> =
   observer((props) => {
     const { data, onScrollToLower, onRefresherRefresh } = props;
-
+    const { refresherTriggered, handleRefresherTriggered } =
+      useRefresherTriggered(onRefresherRefresh);
     const [column1, column2] = useMemo(() => {
       const _column1: Base.Post[] = [];
       const _column2: Base.Post[] = [];
@@ -56,14 +57,18 @@ export const PostListComponent: FunctionComponent<PostListComponentProps> =
       }
       return [_column1, _column2];
     }, [data]);
-
+    if (data.length === 0) return <View>暂无数据</View>;
     return (
-      <ScrollViewComponent
+      <ScrollView
         className="post-list"
+        scrollY
+        scrollWithAnimation
+        enableBackToTop
         enableFlex
         onScrollToLower={onScrollToLower}
-        onRefresherRefresh={onRefresherRefresh}
-        data={data}
+        refresherEnabled
+        refresherTriggered={refresherTriggered}
+        onRefresherRefresh={handleRefresherTriggered}
       >
         <View className="column">
           {column1.map((post) => (
@@ -79,6 +84,6 @@ export const PostListComponent: FunctionComponent<PostListComponentProps> =
             </Navigator>
           ))}
         </View>
-      </ScrollViewComponent>
+      </ScrollView>
     );
   });

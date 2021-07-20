@@ -60,9 +60,9 @@ export class PostListViewModel extends ViewModelWithModule<PostListViewModelProp
       });
     this._foc = new BaseFDC<Base.Post>({
       requestFunction,
-      onNoMoreData() {},
+      onNoMoreData() { },
     });
-    this._foc.init();
+    return this._foc.init();
   };
 
   @action

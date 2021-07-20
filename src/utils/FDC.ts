@@ -88,9 +88,7 @@ export class BaseFDC<T> {
     this._onNoMoreData = onNoMoreData;
   }
 
-  init = () => {
-    this._fetchData();
-  };
+  init = () => this._fetchData();
 
   @action
   protected async _fetchData() {
@@ -152,9 +150,7 @@ export class BaseFDC<T> {
 export class RecommendFDC<T> extends BaseFDC<T> {
   private _scrollId: string = '-1';
 
-  init = () => {
-    this._fetchData(this._scrollId);
-  };
+  init = () => this._fetchData(this._scrollId);
 
   @action
   protected async _handleRequest(index: number | string) {

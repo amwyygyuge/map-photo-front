@@ -9,13 +9,17 @@ import { PostListComponent } from '@/components/PostListComponent';
 
 const PostList: FunctionComponent<PostListViewModelProps> = observer(
   (props) => {
-    const { handleScrollToLower, dataStatus, data } = useVM(
+    const { handleScrollToLower, dataStatus, data, init } = useVM(
       PostListViewModel,
       props,
     );
 
     return (
-      <PostListComponent data={data} onScrollToLower={handleScrollToLower} />
+      <PostListComponent
+        onRefresherRefresh={init}
+        data={data}
+        onScrollToLower={handleScrollToLower}
+      />
     );
   },
 );

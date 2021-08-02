@@ -21,21 +21,19 @@ const Post = react.memo((props: Base.Post) => (
       mode="widthFix"
     />
     <View className="info">
-      {props.description}
-      <View className="bottom">
-        <View className="user-info">
-          <AtAvatar circle size="small" text="头像" className="avatar" />
-          用户名
-        </View>
+      <View className="user-info">
+        <AtAvatar circle size="small" text="头像" className="avatar" />
+        {props.user_info.nickName}
         <View className="actions">
           {props.does_self_liked ? (
-            <AtIcon value="heart-2" size={20} color="#E93B3D" />
+            <AtIcon value="heart-2" size="24rpx" color="#E93B3D" />
           ) : (
-            <AtIcon value="heart" size={20} color="#E93B3D" />
+            <AtIcon value="heart" size="24rpx" color="#E93B3D" />
           )}
           {props.praise_count}
         </View>
       </View>
+      <View className="description">{props.description}</View>
     </View>
   </View>
 ));

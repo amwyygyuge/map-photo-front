@@ -87,6 +87,7 @@ declare namespace Base {
     user_id: number;
     scroll_id: number;
     does_self_liked: false;
+    user_info: User;
   };
 
   type Attention = {

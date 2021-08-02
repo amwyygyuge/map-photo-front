@@ -7,47 +7,50 @@
   .column {
     display: flex;
     flex-direction: column;
-    width: 47%;
+    width: 330px;
   }
 
   .post-card {
-    margin: 12rpx 0;
+    margin-top: 24px ;
     background: #fff;
-    border-radius: 8px 8px 0 0;
+    border-radius: 2PX 2PX 0 0; 
+    box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.1);
     .coverPhoto {
-      border-radius: 8px 8px 0 0;
+      border-radius: 2PX 2PX 0 0;
       width: 100%;
       background-color: none;
     }
     .info {
-      padding: 10rpx 20rpx 20rpx 20rpx;
-    }
-    .bottom {
-      margin-top: 18rpx;
-      color: #999;
-      font-size: 24rpx;
-      display: flex;
-      align-items: center;
+      padding: 18px 20px 24px 20px;
+      border-radius: 0 0 2PX 2PX;
       .user-info {
         display: flex;
         align-items: center;
-        view.avatar {
-          width: 40rpx;
-          height: 40rpx;
-          font-size: 16rpx;
-          line-height: 40rpx;
+        font-size: 24px;
+        .avatar {
+          width: 30px;
+          height:30px;
+          font-size:30px;
+          line-height:30px;
           display: inline-block;
-          margin-right: 12rpx;
+          margin-right: 20px;
         }
       }
+      .description{
+        font-size: 24px;
+        color: #9B99A9;
+        margin-top: 20px;
+      }
       .actions {
+        float: right;
         flex: 1;
         text-align: right;
-        padding-right: 10rpx;
-
+        color: #9B99A9;
+        font-size: 24px;
+    
         .at-icon {
-          font-size: 20px;
-          margin-right: 8rpx;
+          font-size: 24px;
+          margin-right: 8px;
         }
       }
     }

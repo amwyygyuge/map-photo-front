@@ -1,4 +1,4 @@
-import { View, Image, Text } from '@tarojs/components';
+import { View, Image, Text, Swiper, SwiperItem } from '@tarojs/components';
 import { observer } from 'mobx-react';
 import { useVM } from '@/utils/index';
 import { PostDetailViewModel } from './PostDetail.ViewModel';
@@ -28,30 +28,26 @@ const PostDetailComponent: FunctionComponent = observer(() => {
 
   return (
     <View className="at-article detail">
-      <View className="at-article__h1">
-        <AtAvatar image={avatarUrl} circle size="small" />
+      <View className="at-article__h1 detail-user-info">
+        <AtAvatar image={avatarUrl} circle size="small" className="avatar" />
         <Text className="user-name">{nickName}</Text>
-        <FollowButton userId={userId} isFollowed={does_self_followed} />
+        {/* <FollowButton userId={userId} isFollowed={does_self_followed} /> */}
       </View>
-      <View className="at-article__info sub-title">
-        <Text className="time">{created_at}</Text>
-        <View className="infos">
-          {/* <AtIcon value="heart-2" color="#E93B3D" /> {praise_count} */}
-          <AtIcon value="message" /> {comment_count}
-        </View>
-      </View>
+
       <View className="at-article__content">
-        <View className="at-article__p">{description}</View>
-        <View className="images">
+        <Swiper indicatorDots className="image-swiper">
           {photoArray.map((src) => (
-            <Image
-              key={src}
-              className="at-article__img"
-              src={src}
-              onClick={() => preViewImage(src)}
-            />
+            <SwiperItem key={src}>
+              <Image
+                className="image"
+                mode="scaleToFill"
+                src={src}
+                onClick={() => preViewImage(src)}
+              />
+            </SwiperItem>
           ))}
-        </View>
+        </Swiper>
+        <View>{description}</View>
       </View>
 
       <View className="at-article__info actions">

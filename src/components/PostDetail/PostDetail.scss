@@ -1,13 +1,6 @@
 .detail {
-  .image-swiper{
-    width: 100%;
-    height: 460px;
-    border-radius: 2Px 2Px 0px 0Px;
-    .image{
-      width: 100%;
-    }
-  }
-  .at-article__h1 {
+  color:#111111;
+  .detail-user-info {
     display: flex;
     align-items: center;
     padding: 28px 20px;
@@ -25,26 +18,38 @@
       font-size: 28px;
     }
   }
-  .sub-title {
-    display: flex;
-    align-content: center;
-    justify-content: flex-end;
-    .infos {
-      justify-items: flex-end;
-      .at-icon {
-        margin-left: 20rpx;
+
+  .detail-content{
+    .image-swiper{
+      width: 100%;
+      height: 460px;
+      border-radius: 2Px 2Px 0px 0Px;
+      .image{
+        width: 100%;
       }
     }
-  }
-  .images {
-    display: flex;
-    align-content: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    .at-article__img {
-      width: 30%;
-      height: 200rpx;
+    .detail-content-container{
+      padding: 40px;
+      font-size: 24px;
+      border-bottom: 1px solid #CCC;
+      margin-bottom: 30px;
     }
+    .description{
+      margin-bottom: 20px;
+    }
+    .date{
+      display: flex;
+      align-items: center;
+      .button-container{
+        flex: 1;
+        text-align: right;
+        .like{
+          padding: 0;
+        }
+      }
+
+    }
+
   }
   .actions {
     display: flex;
@@ -54,5 +59,39 @@
     .at-icon {
       margin: 0 10rpx;
     }
+  }
+  .comment-input{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 50px;
+    padding: 20px;
+    color: #111111;
+    background: #fff;
+    display: flex;
+    .item{
+      margin: 0 25px;
+      .at-icon{
+        margin-right: 8px;
+      }
+    }
+    .input-item{
+      margin-left: 30px;
+      width: 360px;
+      height: 50px;
+      background: #E8E8E8;
+      border-radius: 40px;
+      font-size: 28px;
+      line-height: 50px;
+      text-indent: 20px;
+      color: #9B99A9;
+      margin-right: 50px;
+    }
+  }
+  .fill{
+    width: 100%;
+    height: 80px;
   }
 }

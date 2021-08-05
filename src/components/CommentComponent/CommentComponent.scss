@@ -1,20 +1,21 @@
 .comment-card {
-    margin: 12rpx auto;
+    margin: 12px auto;
     background: #fff;
-    border-radius: 8px 8px 0 0;
+    border-radius: 8PX 8PX 0 0;
     width: 100%;
     box-sizing: border-box;
-    padding: 20rpx;
+    padding: 20px;
+    border-bottom: 1PX solid #DFDFDD;
     .user-info {
         display: flex;
         align-items: center;
-        view.avatar {
-            width: 70rpx;
-            height: 70rpx;
-            font-size: 20rpx;
-            line-height: 70rpx;
+        .avatar {
+            width: 48px;
+            height: 48px;
+            font-size: 48px;
+            line-height: 48px;
             display: block;
-            margin-right: 20rpx;
+            margin-right: 20px;
         }
         .infos {
             display: flex;
@@ -39,5 +40,5 @@
 }
 
 .comment-card.child-comment {
-    padding-left: 100rpx;
+    padding-left: 80px;
 }

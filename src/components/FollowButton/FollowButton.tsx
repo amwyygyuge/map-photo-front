@@ -6,13 +6,10 @@ import {
 } from './FollowButton.ViewModel';
 import { FunctionComponent } from 'react';
 import './FollowButton.scss';
-import { AtButton, AtIcon } from 'taro-ui';
+import { AtButton } from 'taro-ui';
 
 const FollowButton: FunctionComponent<FollowButtonProps> = observer((props) => {
-  const { handleClick, isFollowed, isMe, text } = useVM(
-    FollowButtonViewModel,
-    props,
-  );
+  const { handleClick, isMe, text } = useVM(FollowButtonViewModel, props);
 
   if (isMe) {
     return null;
@@ -20,11 +17,11 @@ const FollowButton: FunctionComponent<FollowButtonProps> = observer((props) => {
   return (
     <AtButton
       onClick={handleClick}
-      type="primary"
+      type="secondary"
+      circle
       size="small"
-      className="follow-button"
+      className="follow-button common-button"
     >
-      {!isFollowed && <AtIcon value="add" size={18} />}
       {text}
     </AtButton>
   );

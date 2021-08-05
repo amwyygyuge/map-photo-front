@@ -1,11 +1,15 @@
 import { action, observable } from 'mobx';
 import { ViewModelWithModule } from '@/utils/index';
 import { EVENT_KEY } from '../../constants';
+import React from 'react';
 
 export type CommentButtonProps = {
   id: number;
   type: COMMENT_TYPE;
   toUserId?: number;
+  count?: number;
+  disabledClick?: boolean;
+  render?: React.ReactNode;
 };
 
 export enum COMMENT_TYPE {
@@ -15,10 +19,18 @@ export enum COMMENT_TYPE {
 
 export class CommentButtonViewModel extends ViewModelWithModule<CommentButtonProps> {
   @observable
+  count?: number;
+
+  @observable
   isOpen: boolean = false;
 
   @observable
   input: string = '';
+
+  constructor(props: CommentButtonProps) {
+    super(props);
+    this.count = this.props.count;
+  }
 
   @action
   handleClick = () => {
@@ -49,6 +61,7 @@ export class CommentButtonViewModel extends ViewModelWithModule<CommentButtonPro
       comment: this.input,
       to_user_id: this.props.toUserId,
     });
+    this.count !== undefined && this.count++;
     this._taro.eventCenter.trigger(
       `${EVENT_KEY.NEW_CHILD_COMMENT}.${this.props.id}`,
       res.data,

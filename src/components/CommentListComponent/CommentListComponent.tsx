@@ -16,6 +16,7 @@ const CommentListComponent: FunctionComponent<CommentListComponentViewModelProps
     if (hotComments.length === 0) return <View>暂无数据</View>;
     return (
       <View className="comment-list">
+        <View>共{hotComments.length}条评论</View>
         {hotComments.map((item) => (
           <CommentComponent comment={item} key={item.id} />
         ))}

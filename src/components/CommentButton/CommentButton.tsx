@@ -7,6 +7,7 @@ import {
 import { FunctionComponent } from 'react';
 import { AtIcon, AtFloatLayout, AtTextarea, AtButton } from 'taro-ui';
 import './CommentButton.scss';
+import { View } from '@tarojs/components';
 
 const CommentButton: FunctionComponent<CommentButtonProps> = observer(
   (props) => {
@@ -17,26 +18,40 @@ const CommentButton: FunctionComponent<CommentButtonProps> = observer(
       input,
       handleComment,
       handleClose,
+      count,
     } = useVM(CommentButtonViewModel, props);
-
+    const { disabledClick, render } = props;
     return (
       <>
-        <AtFloatLayout isOpened={isOpen} onClose={handleClose} title="发表评论">
-          <AtTextarea
-            placeholder="评论"
-            autoFocus
-            showConfirmBar
-            onChange={handleInput}
-            value={input}
-            onConfirm={handleComment}
-            focus={isOpen}
-          />
+        {!disabledClick && (
+          <AtFloatLayout
+            isOpened={isOpen}
+            onClose={handleClose}
+            title="发表评论"
+          >
+            <AtTextarea
+              placeholder="评论"
+              autoFocus
+              showConfirmBar
+              onChange={handleInput}
+              value={input}
+              onConfirm={handleComment}
+              focus={isOpen}
+            />
 
-          <AtButton onClick={handleComment} className="comment-button">
-            评论
-          </AtButton>
-        </AtFloatLayout>
-        <AtIcon value="message" onClick={handleClick} />
+            <AtButton onClick={handleComment} className="comment-button">
+              评论
+            </AtButton>
+          </AtFloatLayout>
+        )}
+        {render ? (
+          <View onClick={handleClick}>{render}</View>
+        ) : (
+          <>
+            <AtIcon value="message" onClick={handleClick} />
+            {count}
+          </>
+        )}
       </>
     );
   },

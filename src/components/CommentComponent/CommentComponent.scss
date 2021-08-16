@@ -5,10 +5,11 @@
     width: 100%;
     box-sizing: border-box;
     padding: 20px;
-    border-bottom: 1PX solid #DFDFDD;
+
     .user-info {
         display: flex;
         align-items: center;
+        width: 100%;
         .avatar {
             width: 48px;
             height: 48px;
@@ -17,25 +18,44 @@
             display: block;
             margin-right: 20px;
         }
-        .infos {
+        .userName{
+             color: #576B95;
+            font-size: 14PX;
+
+        }
+        .comment-card-actions {
+            flex: 1;
+            padding-right: 10rpx;
             display: flex;
-            flex-direction: column;
-            .info {
-                color: #ccc;
-                font-size: 28rpx;
-                line-height: 42rpx;
+            align-items: center;
+            justify-content: flex-end;
+            .at-icon:last-child{
+                margin-left: 30px;
+            }
+            .at-icon {
+                margin-right: 10px;
             }
         }
     }
-    .actions {
-        flex: 1;
-        padding-right: 10rpx;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        .at-button {
-            margin: 0;
-        }
+    .comment {
+       margin-left: 70px;
+       font-size: 12PX;
+       margin-top: 4px;
+       display: block;
+
+    }
+    .date {
+        display: block;
+        color: #ccc;
+        font-size: 12PX;
+        line-height: 12PX;
+        margin-top: 20px;
+        margin-right: -20px;
+        margin-left: -20px;
+        padding-left: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1PX solid #DFDFDD;
+
     }
 }
 

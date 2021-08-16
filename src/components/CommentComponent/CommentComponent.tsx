@@ -19,13 +19,14 @@ const CommentComponent: FunctionComponent<CommentComponentProps> = observer(
       does_self_liked,
       praise_count,
       user: { avatarUrl, nickName },
+      created_at,
     } = props.comment;
 
     const { hotComments } = useVM(CommentComponentViewModel, props);
 
     return (
       <>
-        <View className="comment-card at-row">
+        <View className="comment-card">
           <View className="user-info">
             <AtAvatar
               circle
@@ -34,25 +35,26 @@ const CommentComponent: FunctionComponent<CommentComponentProps> = observer(
               className="avatar"
               image={avatarUrl}
             />
-            <View className="infos">
-              <Text className="userName">{nickName}</Text>
-              {comment}
+            <Text className="userName">{nickName}</Text>
+            <View className="comment-card-actions">
+              <KudosButton
+                isKudos={does_self_liked}
+                id={id}
+                type={KUDOS_TYPE.COMMENT}
+                count={praise_count}
+                size={18}
+              />
+
+              <CommentButton size={18} id={id} type={COMMENT_TYPE.COMMENT} />
             </View>
           </View>
-          <View className="actions">
-            <KudosButton
-              isKudos={does_self_liked}
-              id={id}
-              type={KUDOS_TYPE.COMMENT}
-              count={praise_count}
-            />
-          </View>
-          <CommentButton id={id} type={COMMENT_TYPE.COMMENT} />
+          <Text className="comment">{comment}</Text>
+          <Text className="date">{created_at}</Text>
         </View>
 
         {hotComments.map((item) => {
           return (
-            <View className="comment-card at-row child-comment" key={item.id}>
+            <View className="comment-card child-comment" key={item.id}>
               <View className="user-info">
                 <AtAvatar
                   circle
@@ -61,19 +63,19 @@ const CommentComponent: FunctionComponent<CommentComponentProps> = observer(
                   className="avatar"
                   image={item.from_user.avatarUrl}
                 />
-                <View className="infos">
-                  <Text className="userName">{item.from_user.nickName}</Text>
-                  {item.comment}
+                <Text className="userName">{item.from_user.nickName}</Text>
+                <View className="comment-card-actions">
+                  <KudosButton
+                    isKudos={item.does_self_liked}
+                    id={item.id}
+                    type={KUDOS_TYPE.CHILD_COMMENT}
+                    count={item.praise_count}
+                    size={18}
+                  />
                 </View>
               </View>
-              <View className="actions">
-                <KudosButton
-                  isKudos={item.does_self_liked}
-                  id={item.id}
-                  type={KUDOS_TYPE.CHILD_COMMENT}
-                  count={item.praise_count}
-                />
-              </View>
+              <Text className="comment">{item.comment}</Text>
+              <Text className="date">{item.created_at}</Text>
             </View>
           );
         })}

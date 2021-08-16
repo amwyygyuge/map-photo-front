@@ -1,12 +1,14 @@
 import { action, computed, observable } from 'mobx';
 
 import { ViewModelWithModule } from '@/utils/index';
+import { AtIconProps } from 'taro-ui/types/icon';
 
 export type KudosButtonProps = {
   isKudos: boolean;
   id: number;
   type: KUDOS_TYPE;
   count?: number;
+  size?: AtIconProps['size'];
 };
 
 export enum KUDOS_TYPE {

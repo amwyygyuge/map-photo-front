@@ -2,6 +2,7 @@ import { action, observable } from 'mobx';
 import { ViewModelWithModule } from '@/utils/index';
 import { EVENT_KEY } from '../../constants';
 import React from 'react';
+import { AtIconProps } from 'taro-ui/types/icon';
 
 export type CommentButtonProps = {
   id: number;
@@ -10,6 +11,7 @@ export type CommentButtonProps = {
   count?: number;
   disabledClick?: boolean;
   render?: React.ReactNode;
+  size?: AtIconProps['size'];
 };
 
 export enum COMMENT_TYPE {

@@ -20,7 +20,7 @@ const CommentButton: FunctionComponent<CommentButtonProps> = observer(
       handleClose,
       count,
     } = useVM(CommentButtonViewModel, props);
-    const { disabledClick, render } = props;
+    const { disabledClick, render, size } = props;
     return (
       <>
         {!disabledClick && (
@@ -48,7 +48,7 @@ const CommentButton: FunctionComponent<CommentButtonProps> = observer(
           <View onClick={handleClick}>{render}</View>
         ) : (
           <>
-            <AtIcon value="message" onClick={handleClick} />
+            <AtIcon size={size} value="message" onClick={handleClick} />
             {count}
           </>
         )}
